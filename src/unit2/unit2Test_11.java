@@ -1,3 +1,4 @@
+package unit2;
 import java.util.Scanner;
 
 public class unit2Test_11 {
@@ -22,7 +23,7 @@ public class unit2Test_11 {
 		int dec = dec1 + dec2 + dec3;
 		
 		if(dec > 64) {
-			int eight1 = 
+			int eight1;
 		}
 		System.out.println(six + " in base 6 is equal to " + "eight" + " in base 8");
 		
