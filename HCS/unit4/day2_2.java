@@ -15,8 +15,11 @@ public class day2_2 {
 		double mul = input.nextDouble();
 		
 		if(num%mul == 0) {
-			
+			System.out.println(mul + " is a multiple of " + num);
 		}
+		else {
+            System.out.println(mul + " is not a multiple of " + num);
+        }
 		
 	}
 
