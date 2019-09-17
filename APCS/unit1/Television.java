@@ -23,7 +23,7 @@ public class Television {
     void turnOnOff(){
         power = !power;
         if(power){System.out.println("Power On");}
-        else if(!power){System.out.println("Power Off");}
+        else {System.out.println("Power Off");}
     }
 
     //volume

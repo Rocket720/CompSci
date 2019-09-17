@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day5_2",
+            "request": "launch",
+            "mainClass": "unit1.day5_2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Tester",
+            "request": "launch",
+            "mainClass": "unit1.Tester"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day5_4",
+            "request": "launch",
+            "mainClass": "unit1.day5_4"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - recursionFactorial",
+            "request": "launch",
+            "mainClass": "General.recursionFactorial"
+        }
+    ]
+}
