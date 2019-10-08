@@ -2,6 +2,67 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - day5_1",
+            "request": "launch",
+            "mainClass": "day5_1",
+            "projectName": "CompSci_9b547c47"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day3_1",
+            "request": "launch",
+            "mainClass": "day3_1"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test_4",
+            "request": "launch",
+            "mainClass": "test_4"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test_3",
+            "request": "launch",
+            "mainClass": "test_3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test_2",
+            "request": "launch",
+            "mainClass": "test_2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test_1",
+            "request": "launch",
+            "mainClass": "test_1"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day1_3",
+            "request": "launch",
+            "mainClass": "day1_3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day1_1",
+            "request": "launch",
+            "mainClass": "day1_1"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day6_2",
+            "request": "launch",
+            "mainClass": "day6_2"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - day6_1",
+            "request": "launch",
+            "mainClass": "day6_1"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - day5_2",
             "request": "launch",
             "mainClass": "unit1.day5_2"
