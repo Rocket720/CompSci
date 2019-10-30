@@ -1,25 +1,28 @@
 public class Triangle {
 
-    private double leg1 = 0;
-    private double leg2 = 0;
-    private double leg3 = 0;
+    private double a = 0;
+    private double b = 0;
+    private double c = 0;
+    private double angle = 0;
     private String type = "";
 
-    Triangle(double x, double y){
-        leg1 = x;
-        leg2 = y;
-        leg3 = hypotenuse();
+    Triangle(double x, double y, double z){
+        a = x;
+        b = y;
+        c = z;
+        angle = angle();
+        type = type();
     }
 
-    double hypotenuse(){
-        return Math.sqrt(Math.pow(leg1, 2) + Math.pow(leg2, 2));
+    private double angle(){
+        return Math.acos((Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(c, 2)) / (2*a*b));
     }
 
     public static int similar(Triangle[] set){
         int count = 0;
         for (Triangle e : set) {
-            double x = leg1/leg2;
-            double y = e.leg1/e.leg2;
+            double x = a/b;
+            double y = e.a/e.b;
             if (x==y || x==(1/y))
                 count++;
         }
@@ -27,22 +30,27 @@ public class Triangle {
     }
 
     private String type(){
-        return "";
+        if(Math.sqrt(a*a+b*b)==c)
+            return "";
     }
 
     public String getType(){
         return type;
     }
 
-    double getLeg1(){
-        return leg1;
+    private setType(String type){
+        this.type = type;
     }
-    double getLeg2(){
-        return leg2;
+
+    double getA(){
+        return a;
+    }
+    double getB(){
+        return b;
     }
 
     public String toString(){
-        return(leg1 + " by " + leg2);
+        return(a + " by " + b);
     }
     
 
