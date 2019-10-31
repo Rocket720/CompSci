@@ -304,16 +304,18 @@ class Master {
     }
 
     public int take3(ArrayList<ArrayList<ArrayList<Integer>>> y) {
+
         if (y.size() == 0)
             return 0;
         if (y.size() == 1)
             return 1;
         ArrayList<ArrayList<Integer>> tempAA = new ArrayList<>();
         ArrayList<Integer> tempA = new ArrayList<>();
-        int max = 0;
+        int max = 0, prevMax;
         if (y.size() == 2) {
             for (int a = 0; a < y.get(0).size(); a++) {
                 for (int b = 0; b < y.get(1).size(); b++) {
+                    prevMax = max;
                     if (doesntContain(tempA, y.get(0).get(a))) {
                         tempAA.add(y.get(0).get(a));
                         tempA.addAll(y.get(0).get(a));
@@ -323,8 +325,12 @@ class Master {
                         tempA.addAll(y.get(1).get(b));
                     }
                     max = Math.max(max, tempAA.size());
-                    if (max == 2)
-                        return 2;
+                    if(max > prevMax){
+                        Student.maxPerms = 1;
+                    }
+                    else if(max == prevMax){
+                        Student.maxPerms++;
+                    }
                     tempAA.clear();
                     tempA.clear();
                 }
@@ -2340,6 +2346,7 @@ class Student implements Comparable<Student> {
     ArrayList<Boolean> conflict;
     int numConflicts = 0;
     ArrayList<ArrayList<Course>> stuConflicts = new ArrayList<>();
+    static int maxPerms = 0;
 
     int before = 0;
 
@@ -3524,8 +3531,6 @@ public class Tester {
 
 
         //System.out.println(PersonalFitness_881053.roster.size());
-
-//        x.sched();
 
 
     }
