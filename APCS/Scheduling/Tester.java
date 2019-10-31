@@ -343,6 +343,7 @@ class Master {
             for (int a = 0; a < y.get(0).size(); a++) {
                 for (int b = 0; b < y.get(1).size(); b++) {
                     for (int c = 0; c < y.get(2).size(); c++) {
+                        prevMax = max;
                         if (doesntContain(tempA, y.get(0).get(a))) {
                             tempAA.add(y.get(0).get(a));
                             tempA.addAll(y.get(0).get(a));
@@ -356,8 +357,12 @@ class Master {
                             tempA.addAll(y.get(2).get(c));
                         }
                         max = Math.max(max, tempAA.size());
-                        if (max == 3)
-                            return 3;
+                        if(max > prevMax){
+                            Student.maxPerms = 1;
+                        }
+                        else if(max == prevMax){
+                            Student.maxPerms++;
+                        }
                         tempAA.clear();
                         tempA.clear();
                     }
@@ -373,6 +378,7 @@ class Master {
                 for (int b = 0; b < y.get(1).size(); b++) {
                     for (int c = 0; c < y.get(2).size(); c++) {
                         for (int d = 0; d < y.get(3).size(); d++) {
+                            prevMax = max;
                             if (doesntContain(tempA, y.get(0).get(a))) {
                                 tempAA.add(y.get(0).get(a));
                                 tempA.addAll(y.get(0).get(a));
@@ -390,8 +396,12 @@ class Master {
                                 tempA.addAll(y.get(3).get(d));
                             }
                             max = Math.max(max, tempAA.size());
-                            if (max == 4)
-                                return 4;
+                            if(max > prevMax){
+                                Student.maxPerms = 1;
+                            }
+                            else if(max == prevMax){
+                                Student.maxPerms++;
+                            }
                             tempAA.clear();
                             tempA.clear();
                         }
@@ -405,6 +415,7 @@ class Master {
                     for (int c = 0; c < y.get(2).size(); c++) {
                         for (int d = 0; d < y.get(3).size(); d++) {
                             for (int e = 0; e < y.get(4).size(); e++) {
+                                prevMax = max;
                                 if (doesntContain(tempA, y.get(0).get(a))) {
                                     tempAA.add(y.get(0).get(a));
                                     tempA.addAll(y.get(0).get(a));
@@ -426,8 +437,12 @@ class Master {
                                     tempA.addAll(y.get(4).get(e));
                                 }
                                 max = Math.max(max, tempAA.size());
-                                if (max == 5)
-                                    return 5;
+                                if(max > prevMax){
+                                    Student.maxPerms = 1;
+                                }
+                                else if(max == prevMax){
+                                    Student.maxPerms++;
+                                }
                                 tempAA.clear();
                                 tempA.clear();
                             }
@@ -444,6 +459,7 @@ class Master {
                         for (int d = 0; d < y.get(3).size(); d++) {
                             for (int e = 0; e < y.get(4).size(); e++) {
                                 for (int f = 0; f < y.get(5).size(); f++) {
+                                    prevMax = max;
                                     if (doesntContain(tempA, y.get(0).get(a))) {
                                         tempAA.add(y.get(0).get(a));
                                         tempA.addAll(y.get(0).get(a));
@@ -469,8 +485,12 @@ class Master {
                                         tempA.addAll(y.get(5).get(f));
                                     }
                                     max = Math.max(max, tempAA.size());
-                                    if (max == 6)
-                                        return 6;
+                                    if(max > prevMax){
+                                        Student.maxPerms = 1;
+                                    }
+                                    else if(max == prevMax){
+                                        Student.maxPerms++;
+                                    }
                                     tempAA.clear();
                                     tempA.clear();
                                 }
@@ -489,6 +509,7 @@ class Master {
                             for (int e = 0; e < y.get(4).size(); e++) {
                                 for (int f = 0; f < y.get(5).size(); f++) {
                                     for (int g = 0; g < y.get(6).size(); g++) {
+                                        prevMax = max;
                                         if (doesntContain(tempA, y.get(0).get(a))) {
                                             tempAA.add(y.get(0).get(a));
                                             tempA.addAll(y.get(0).get(a));
@@ -518,8 +539,12 @@ class Master {
                                             tempA.addAll(y.get(6).get(g));
                                         }
                                         max = Math.max(max, tempAA.size());
-                                        if (max == 7)
-                                            return 7;
+                                        if(max > prevMax){
+                                            Student.maxPerms = 1;
+                                        }
+                                        else if(max == prevMax){
+                                            Student.maxPerms++;
+                                        }
                                         tempAA.clear();
                                         tempA.clear();
                                     }
@@ -539,6 +564,7 @@ class Master {
                                 for (int f = 0; f < y.get(5).size(); f++) {
                                     for (int g = 0; g < y.get(6).size(); g++) {
                                         for (int h = 0; h < y.get(7).size(); h++) {
+                                            prevMax = max;
                                             if (doesntContain(tempA, y.get(0).get(a))) {
                                                 tempAA.add(y.get(0).get(a));
                                                 tempA.addAll(y.get(0).get(a));
@@ -573,8 +599,12 @@ class Master {
                                             }
 
                                             max = Math.max(max, tempAA.size());
-                                            if (max == 8)
-                                                return 8;
+                                            if(max > prevMax){
+                                                Student.maxPerms = 1;
+                                            }
+                                            else if(max == prevMax){
+                                                Student.maxPerms++;
+                                            }
                                             tempAA.clear();
                                             tempA.clear();
                                         }
@@ -596,6 +626,7 @@ class Master {
                                     for (int g = 0; g < y.get(6).size(); g++) {
                                         for (int h = 0; h < y.get(7).size(); h++) {
                                             for (int i = 0; i < y.get(8).size(); i++) {
+                                                prevMax = max;
                                                 if (doesntContain(tempA, y.get(0).get(a))) {
                                                     tempAA.add(y.get(0).get(a));
                                                     tempA.addAll(y.get(0).get(a));
@@ -634,8 +665,12 @@ class Master {
                                                 }
 
                                                 max = Math.max(max, tempAA.size());
-                                                if (max == 9)
-                                                    return 9;
+                                                if(max > prevMax){
+                                                    Student.maxPerms = 1;
+                                                }
+                                                else if(max == prevMax){
+                                                    Student.maxPerms++;
+                                                }
                                                 tempAA.clear();
                                                 tempA.clear();
                                             }
@@ -659,6 +694,7 @@ class Master {
                                         for (int h = 0; h < y.get(7).size(); h++) {
                                             for (int i = 0; i < y.get(8).size(); i++) {
                                                 for (int j = 0; j < y.get(9).size(); j++) {
+                                                    prevMax = max;
                                                     if (doesntContain(tempA, y.get(0).get(a))) {
                                                         tempAA.add(y.get(0).get(a));
                                                         tempA.addAll(y.get(0).get(a));
@@ -700,8 +736,12 @@ class Master {
                                                         tempA.addAll(y.get(9).get(j));
                                                     }
                                                     max = Math.max(max, tempAA.size());
-                                                    if (max == 10)
-                                                        return 10;
+                                                    if(max > prevMax){
+                                                        Student.maxPerms = 1;
+                                                    }
+                                                    else if(max == prevMax){
+                                                        Student.maxPerms++;
+                                                    }
                                                     tempAA.clear();
                                                     tempA.clear();
                                                 }
@@ -728,6 +768,7 @@ class Master {
                                             for (int i = 0; i < y.get(8).size(); i++) {
                                                 for (int j = 0; j < y.get(9).size(); j++) {
                                                     for (int k = 0; k < y.get(10).size(); k++) {
+                                                        prevMax = max;
                                                         if (doesntContain(tempA, y.get(0).get(a))) {
                                                             tempAA.add(y.get(0).get(a));
                                                             tempA.addAll(y.get(0).get(a));
@@ -774,8 +815,12 @@ class Master {
                                                         }
 
                                                         max = Math.max(max, tempAA.size());
-                                                        if (max == 11)
-                                                            return 11;
+                                                        if(max > prevMax){
+                                                            Student.maxPerms = 1;
+                                                        }
+                                                        else if(max == prevMax){
+                                                            Student.maxPerms++;
+                                                        }
                                                         tempAA.clear();
                                                         tempA.clear();
                                                     }
@@ -792,8 +837,6 @@ class Master {
         }
 
         return max;
-
-
     }
 
     public void check(Student x) {
@@ -3529,9 +3572,8 @@ public class Tester {
         //UnitedStatesHistory_401030I
         //WindEnsemble_631103
 
-
+        x.check(PersonalFitness_881053);
         //System.out.println(PersonalFitness_881053.roster.size());
-
 
     }
 }
