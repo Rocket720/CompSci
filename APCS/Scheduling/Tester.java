@@ -1,5 +1,6 @@
 package Scheduling;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -304,7 +305,7 @@ class Master {
     }
 
     public int take3(ArrayList<ArrayList<ArrayList<Integer>>> y) {
-
+        // TODO how can we optimize this during it's usage during check
         if (y.size() == 0)
             return 0;
         if (y.size() == 1)
@@ -1324,7 +1325,14 @@ class Master {
             x.roster.get(i).temp1.clear();
         }
 
-
+        // TODO implement maxPerms to check method
+        // TODO populate individual maxPerms for each attempted section in an ArrayList
+        /*
+            Ex:   Stu1 Stu2
+            (1,2)   8   5
+            (3,4)   48  9
+         */
+        ArrayList<ArrayList<Integer>> studentPermData = new ArrayList<>();
         for (int i = 0; i < x.roster.size(); i++)//for each student on the roster
         {
             for (int j = 0; j < x.roster.get(i).courses.size(); j++)//for each course of those students
