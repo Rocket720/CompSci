@@ -1,10 +1,6 @@
-package Scheduling;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
 //Regular class (1.0) only up to 6 sections
 //Half credit courses (0.5) up to 6 sections
 //Lab classes, (1.5) only up to 6
@@ -16,17 +12,17 @@ import java.util.Collections;
 //inputting false on the check method means that the lab doesn't have to be adjacent to the class
 /* use x.check() for total conflicts
  * x.sched(Student x) gives the student schedule, along with any conflict groups.
- *
- *
- * Results for 2019-2020 after Scheduling Committee:
+ * 
+ * 
+ * Results for 2019-2020 after Scheduling Committee: 
  * Total Students: 471
 Number of students fully scheduled:386
 Number of students Down 1 Course:83
 Number of students Down 2 Courses:2
 Number of students Down 3 Courses:0
 Number of students Down 4 Courses:0
- *
- *
+ * 
+ * 
  Made a Guidance Method for printing conflicts by student, alphabetically
  */
 class Master {
@@ -165,6 +161,7 @@ class Master {
             }
 
 
+
         }
 
         for (int j = 0; j < conflictedCourses.size(); j++) {
@@ -271,6 +268,7 @@ class Master {
             count = 0;
 
 
+
         }
         System.out.println("Seat Count for " + x + "th graders:");
         System.out.println();
@@ -305,18 +303,21 @@ class Master {
     }
 
     public int take3(ArrayList<ArrayList<ArrayList<Integer>>> y) {
-        // TODO how can we optimize this during it's usage during check
         if (y.size() == 0)
             return 0;
-        if (y.size() == 1)
+        if (y.size() == 1) {
+            Student.maxP = y.get(0).size();
             return 1;
+        }
         ArrayList<ArrayList<Integer>> tempAA = new ArrayList<>();
         ArrayList<Integer> tempA = new ArrayList<>();
-        int max = 0, prevMax;
+        int max = 0;
         if (y.size() == 2) {
-            for (int a = 0; a < y.get(0).size(); a++) {
-                for (int b = 0; b < y.get(1).size(); b++) {
-                    prevMax = max;
+//			Student.maxP = 0;
+            for (int a = 0; a < y.get(0).size(); a++)//a = 0, 1
+            {
+                for (int b = 0; b < y.get(1).size(); b++)//b = 0
+                {
                     if (doesntContain(tempA, y.get(0).get(a))) {
                         tempAA.add(y.get(0).get(a));
                         tempA.addAll(y.get(0).get(a));
@@ -325,13 +326,15 @@ class Master {
                         tempAA.add(y.get(1).get(b));
                         tempA.addAll(y.get(1).get(b));
                     }
+                    int currentMax = max;
                     max = Math.max(max, tempAA.size());
-                    if(max > prevMax){
-                        Student.maxPerms = 1;
+                    if (currentMax == tempAA.size())
+                        Student.maxP++;
+                    else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                    {
+                        Student.maxP = 1;
                     }
-                    else if(max == prevMax){
-                        Student.maxPerms++;
-                    }
+
                     tempAA.clear();
                     tempA.clear();
                 }
@@ -344,7 +347,6 @@ class Master {
             for (int a = 0; a < y.get(0).size(); a++) {
                 for (int b = 0; b < y.get(1).size(); b++) {
                     for (int c = 0; c < y.get(2).size(); c++) {
-                        prevMax = max;
                         if (doesntContain(tempA, y.get(0).get(a))) {
                             tempAA.add(y.get(0).get(a));
                             tempA.addAll(y.get(0).get(a));
@@ -357,13 +359,16 @@ class Master {
                             tempAA.add(y.get(2).get(c));
                             tempA.addAll(y.get(2).get(c));
                         }
+                        int currentMax = max;
                         max = Math.max(max, tempAA.size());
-                        if(max > prevMax){
-                            Student.maxPerms = 1;
+                        if (currentMax == tempAA.size())
+                            Student.maxP++;
+                        else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                        {
+                            Student.maxP = 1;
                         }
-                        else if(max == prevMax){
-                            Student.maxPerms++;
-                        }
+
+
                         tempAA.clear();
                         tempA.clear();
                     }
@@ -379,7 +384,6 @@ class Master {
                 for (int b = 0; b < y.get(1).size(); b++) {
                     for (int c = 0; c < y.get(2).size(); c++) {
                         for (int d = 0; d < y.get(3).size(); d++) {
-                            prevMax = max;
                             if (doesntContain(tempA, y.get(0).get(a))) {
                                 tempAA.add(y.get(0).get(a));
                                 tempA.addAll(y.get(0).get(a));
@@ -396,13 +400,15 @@ class Master {
                                 tempAA.add(y.get(3).get(d));
                                 tempA.addAll(y.get(3).get(d));
                             }
+                            int currentMax = max;
                             max = Math.max(max, tempAA.size());
-                            if(max > prevMax){
-                                Student.maxPerms = 1;
+                            if (currentMax == tempAA.size())
+                                Student.maxP++;
+                            else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                            {
+                                Student.maxP = 1;
                             }
-                            else if(max == prevMax){
-                                Student.maxPerms++;
-                            }
+
                             tempAA.clear();
                             tempA.clear();
                         }
@@ -416,7 +422,6 @@ class Master {
                     for (int c = 0; c < y.get(2).size(); c++) {
                         for (int d = 0; d < y.get(3).size(); d++) {
                             for (int e = 0; e < y.get(4).size(); e++) {
-                                prevMax = max;
                                 if (doesntContain(tempA, y.get(0).get(a))) {
                                     tempAA.add(y.get(0).get(a));
                                     tempA.addAll(y.get(0).get(a));
@@ -437,12 +442,13 @@ class Master {
                                     tempAA.add(y.get(4).get(e));
                                     tempA.addAll(y.get(4).get(e));
                                 }
+                                int currentMax = max;
                                 max = Math.max(max, tempAA.size());
-                                if(max > prevMax){
-                                    Student.maxPerms = 1;
-                                }
-                                else if(max == prevMax){
-                                    Student.maxPerms++;
+                                if (currentMax == tempAA.size())
+                                    Student.maxP++;
+                                else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                {
+                                    Student.maxP = 1;
                                 }
                                 tempAA.clear();
                                 tempA.clear();
@@ -460,7 +466,6 @@ class Master {
                         for (int d = 0; d < y.get(3).size(); d++) {
                             for (int e = 0; e < y.get(4).size(); e++) {
                                 for (int f = 0; f < y.get(5).size(); f++) {
-                                    prevMax = max;
                                     if (doesntContain(tempA, y.get(0).get(a))) {
                                         tempAA.add(y.get(0).get(a));
                                         tempA.addAll(y.get(0).get(a));
@@ -485,12 +490,13 @@ class Master {
                                         tempAA.add(y.get(5).get(f));
                                         tempA.addAll(y.get(5).get(f));
                                     }
+                                    int currentMax = max;
                                     max = Math.max(max, tempAA.size());
-                                    if(max > prevMax){
-                                        Student.maxPerms = 1;
-                                    }
-                                    else if(max == prevMax){
-                                        Student.maxPerms++;
+                                    if (currentMax == tempAA.size())
+                                        Student.maxP++;
+                                    else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                    {
+                                        Student.maxP = 1;
                                     }
                                     tempAA.clear();
                                     tempA.clear();
@@ -510,7 +516,6 @@ class Master {
                             for (int e = 0; e < y.get(4).size(); e++) {
                                 for (int f = 0; f < y.get(5).size(); f++) {
                                     for (int g = 0; g < y.get(6).size(); g++) {
-                                        prevMax = max;
                                         if (doesntContain(tempA, y.get(0).get(a))) {
                                             tempAA.add(y.get(0).get(a));
                                             tempA.addAll(y.get(0).get(a));
@@ -539,12 +544,13 @@ class Master {
                                             tempAA.add(y.get(6).get(g));
                                             tempA.addAll(y.get(6).get(g));
                                         }
+                                        int currentMax = max;
                                         max = Math.max(max, tempAA.size());
-                                        if(max > prevMax){
-                                            Student.maxPerms = 1;
-                                        }
-                                        else if(max == prevMax){
-                                            Student.maxPerms++;
+                                        if (currentMax == tempAA.size())
+                                            Student.maxP++;
+                                        else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                        {
+                                            Student.maxP = 1;
                                         }
                                         tempAA.clear();
                                         tempA.clear();
@@ -565,7 +571,6 @@ class Master {
                                 for (int f = 0; f < y.get(5).size(); f++) {
                                     for (int g = 0; g < y.get(6).size(); g++) {
                                         for (int h = 0; h < y.get(7).size(); h++) {
-                                            prevMax = max;
                                             if (doesntContain(tempA, y.get(0).get(a))) {
                                                 tempAA.add(y.get(0).get(a));
                                                 tempA.addAll(y.get(0).get(a));
@@ -599,12 +604,13 @@ class Master {
                                                 tempA.addAll(y.get(7).get(h));
                                             }
 
+                                            int currentMax = max;
                                             max = Math.max(max, tempAA.size());
-                                            if(max > prevMax){
-                                                Student.maxPerms = 1;
-                                            }
-                                            else if(max == prevMax){
-                                                Student.maxPerms++;
+                                            if (currentMax == tempAA.size())
+                                                Student.maxP++;
+                                            else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                            {
+                                                Student.maxP = 1;
                                             }
                                             tempAA.clear();
                                             tempA.clear();
@@ -627,7 +633,6 @@ class Master {
                                     for (int g = 0; g < y.get(6).size(); g++) {
                                         for (int h = 0; h < y.get(7).size(); h++) {
                                             for (int i = 0; i < y.get(8).size(); i++) {
-                                                prevMax = max;
                                                 if (doesntContain(tempA, y.get(0).get(a))) {
                                                     tempAA.add(y.get(0).get(a));
                                                     tempA.addAll(y.get(0).get(a));
@@ -665,12 +670,13 @@ class Master {
                                                     tempA.addAll(y.get(8).get(i));
                                                 }
 
+                                                int currentMax = max;
                                                 max = Math.max(max, tempAA.size());
-                                                if(max > prevMax){
-                                                    Student.maxPerms = 1;
-                                                }
-                                                else if(max == prevMax){
-                                                    Student.maxPerms++;
+                                                if (currentMax == tempAA.size())
+                                                    Student.maxP++;
+                                                else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                                {
+                                                    Student.maxP = 1;
                                                 }
                                                 tempAA.clear();
                                                 tempA.clear();
@@ -695,7 +701,6 @@ class Master {
                                         for (int h = 0; h < y.get(7).size(); h++) {
                                             for (int i = 0; i < y.get(8).size(); i++) {
                                                 for (int j = 0; j < y.get(9).size(); j++) {
-                                                    prevMax = max;
                                                     if (doesntContain(tempA, y.get(0).get(a))) {
                                                         tempAA.add(y.get(0).get(a));
                                                         tempA.addAll(y.get(0).get(a));
@@ -736,12 +741,13 @@ class Master {
                                                         tempAA.add(y.get(9).get(j));
                                                         tempA.addAll(y.get(9).get(j));
                                                     }
+                                                    int currentMax = max;
                                                     max = Math.max(max, tempAA.size());
-                                                    if(max > prevMax){
-                                                        Student.maxPerms = 1;
-                                                    }
-                                                    else if(max == prevMax){
-                                                        Student.maxPerms++;
+                                                    if (currentMax == tempAA.size())
+                                                        Student.maxP++;
+                                                    else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                                    {
+                                                        Student.maxP = 1;
                                                     }
                                                     tempAA.clear();
                                                     tempA.clear();
@@ -769,7 +775,6 @@ class Master {
                                             for (int i = 0; i < y.get(8).size(); i++) {
                                                 for (int j = 0; j < y.get(9).size(); j++) {
                                                     for (int k = 0; k < y.get(10).size(); k++) {
-                                                        prevMax = max;
                                                         if (doesntContain(tempA, y.get(0).get(a))) {
                                                             tempAA.add(y.get(0).get(a));
                                                             tempA.addAll(y.get(0).get(a));
@@ -815,12 +820,13 @@ class Master {
                                                             tempA.addAll(y.get(10).get(k));
                                                         }
 
+                                                        int currentMax = max;
                                                         max = Math.max(max, tempAA.size());
-                                                        if(max > prevMax){
-                                                            Student.maxPerms = 1;
-                                                        }
-                                                        else if(max == prevMax){
-                                                            Student.maxPerms++;
+                                                        if (currentMax == tempAA.size())
+                                                            Student.maxP++;
+                                                        else if (tempAA.size() > currentMax)//this has to be checked, not sure yet
+                                                        {
+                                                            Student.maxP = 1;
                                                         }
                                                         tempAA.clear();
                                                         tempA.clear();
@@ -838,6 +844,8 @@ class Master {
         }
 
         return max;
+
+
     }
 
     public void check(Student x) {
@@ -849,7 +857,7 @@ class Master {
         if (x.dif == 0)
             return;
 
-        //        ArrayList<ArrayList<Course>> myConflicts = new ArrayList<>();
+        //		ArrayList<ArrayList<Course>> myConflicts = new ArrayList<>();
 
         //looking for 2 at a time
         for (int a = 0; a < x.courses.size() - 1; a++)
@@ -865,6 +873,7 @@ class Master {
 
                 }
             }
+
 
 
         //looking for 3 at a time
@@ -911,8 +920,8 @@ class Master {
                 for (int c = b + 1; c < x.courses.size() - 1; c++)
                     for (int d = c + 1; d < x.courses.size(); d++) {
                         skip = false;
-                        //                        System.out.print(a+" "+b+" "+c+" "+d);
-                        //                        System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                        //						System.out.print(a+" "+b+" "+c+" "+d);
+                        //						System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
                         //checking to see if a,b,c,d are already conflicted
                         int counter = 0; //number of a,b,c,d that are in a particular conflict
                         for (int i = 0; i < x.stuConflicts.size(); i++) {
@@ -926,16 +935,16 @@ class Master {
                             if (x.stuConflicts.get(i).contains(x.courses.get(d)))
                                 counter++;
                             if (counter == x.stuConflicts.get(i).size()) {
-                                //                                System.out.println("Skipped: "+a+" "+b+" "+c+" "+d);
+                                //								System.out.println("Skipped: "+a+" "+b+" "+c+" "+d);
                                 skip = true;
-                                //                                System.out.println(x.stuConflicts.get(i).contains(x.courses.get(a))+" "+x.stuConflicts.get(i).contains(x.courses.get(b))+" "+x.stuConflicts.get(i).contains(x.courses.get(c))+" "+x.stuConflicts.get(i).contains(x.courses.get(d)));
-                                //                                System.out.println(counter+" "+x.stuConflicts.get(i).size()+" "+x.stuConflicts.get(i)+" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                                //								System.out.println(x.stuConflicts.get(i).contains(x.courses.get(a))+" "+x.stuConflicts.get(i).contains(x.courses.get(b))+" "+x.stuConflicts.get(i).contains(x.courses.get(c))+" "+x.stuConflicts.get(i).contains(x.courses.get(d)));
+                                //								System.out.println(counter+" "+x.stuConflicts.get(i).size()+" "+x.stuConflicts.get(i)+" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
                             }
                         }
                         if (!skip) {
-                            //                            System.out.println("After skip"+a+" "+b+" "+c+" "+d);
+                            //							System.out.println("After skip"+a+" "+b+" "+c+" "+d);
 
-                            //                            System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                            //							System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
 
                             ArrayList<ArrayList<ArrayList<Integer>>> temp1 = new ArrayList<>();
                             temp1.add(x.courses.get(a).periods);
@@ -1320,21 +1329,16 @@ class Master {
 
 
     public void check(Course x, int sect) {
+        ArrayList<ArrayList<Integer>> numPermsArray = new ArrayList<>();
         for (int i = 0; i < x.roster.size(); i++)//for each student on the roster
         {
             x.roster.get(i).temp1.clear();
         }
 
-        // TODO implement maxPerms to check method
-        // TODO populate individual maxPerms for each attempted section in an ArrayList
-        /*
-            Ex:   Stu1 Stu2
-            (1,2)   8   5
-            (3,4)   48  9
-         */
-        ArrayList<ArrayList<Integer>> studentPermData = new ArrayList<>();
+
         for (int i = 0; i < x.roster.size(); i++)//for each student on the roster
         {
+            Student.maxP = 0;
             for (int j = 0; j < x.roster.get(i).courses.size(); j++)//for each course of those students
             {
                 //populates temp1 w periods.
@@ -1342,30 +1346,39 @@ class Master {
                     x.roster.get(i).temp1.add(x.roster.get(i).courses.get(j).periods);
                 }
 
+
                 x.roster.get(i).before = take3(x.roster.get(i).temp1);
                 //before should have # classes schedulable before trying this one.
 
             }
-
-            if (sect == 1 && x.lab == 1) {
+            int count = 0;//for maxPermsArray
+            if (sect == 1 && x.lab == 1)    //1 section, no lab - just regular class
+            {
                 for (int f = 1; f <= 15; f = f + 2) {
-                    //System.out.println(f+" "+(f+1));
+
                     ArrayList<ArrayList<Integer>> trying = new ArrayList<>();
                     ArrayList<Integer> trying1 = new ArrayList<>();
                     trying1.add(f);
                     trying1.add(f + 1);
                     trying.add(trying1);
                     x.roster.get(i).temp1.add(trying);
-                    if (i == 0)
+                    if (i == 0)    //just for first kid in roster
+                    {
                         x.periodsTrying.add("" + (f + 1) / 2);
+                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                    }
+
                     x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                    x.roster.get(i).temp2.add(trying);
-                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                    numPermsArray.get(count).add(Student.maxP);//
+                    count++;
+                    Student.maxP = 0;
+                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                 }
 
             }
 
-            if (sect == 2 && x.lab == 1) {
+            if (sect == 2 && x.lab == 1)    //2 sections, no lab - just regular class
+            {
                 for (int e = 1; e <= 13; e += 2) {
                     for (int f = e + 2; f <= 15; f = f + 2) {
                         //System.out.println(e+" "+(e+1)+" "+f+" "+(f+1));
@@ -1379,10 +1392,16 @@ class Master {
                         trying.add(trying1);
                         trying.add(trying2);
                         x.roster.get(i).temp1.add(trying);
-                        if (i == 0)
+                        if (i == 0) {
                             x.periodsTrying.add("" + (e + 1) / 2 + " " + (f + 1) / 2);
+                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                        }
+
                         x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                        numPermsArray.get(count).add(Student.maxP);//
+                        count++;
+                        Student.maxP = 0;
+                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                     }
                 }
 
@@ -1407,10 +1426,16 @@ class Master {
                             trying.add(trying2);
                             trying.add(trying3);
                             x.roster.get(i).temp1.add(trying);
-                            if (i == 0)
+                            if (i == 0) {
                                 x.periodsTrying.add("" + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
+                                numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                            }
+
                             x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round                        }
+                            numPermsArray.get(count).add(Student.maxP);//
+                            count++;
+                            Student.maxP = 0;
+                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                         }
 
                     }
@@ -1443,11 +1468,16 @@ class Master {
                                 trying.add(trying3);
                                 trying.add(trying4);
                                 x.roster.get(i).temp1.add(trying);
-                                if (i == 0)
+                                if (i == 0) {
                                     x.periodsTrying.add("" + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
-                                x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                    numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                }
 
+                                x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
+                                numPermsArray.get(count).add(Student.maxP);//
+                                count++;
+                                Student.maxP = 0;
+                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                             }
                         }
 
@@ -1485,9 +1515,15 @@ class Master {
                                     trying.add(trying4);
                                     trying.add(trying5);
                                     x.roster.get(i).temp1.add(trying);
-                                    if (i == 0)
+                                    if (i == 0) {
                                         x.periodsTrying.add("" + (b + 1) / 2 + " " + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
+                                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                    }
+
                                     x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
+                                    numPermsArray.get(count).add(Student.maxP);//
+                                    count++;
+                                    Student.maxP = 0;
                                     x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
 
                                 }
@@ -1534,11 +1570,16 @@ class Master {
                                         trying.add(trying5);
                                         trying.add(trying6);
                                         x.roster.get(i).temp1.add(trying);
-                                        if (i == 0)
+                                        if (i == 0) {
                                             x.periodsTrying.add("" + (a + 1) / 2 + " " + (b + 1) / 2 + " " + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
-                                        x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                        }
 
+                                        x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
+                                        numPermsArray.get(count).add(Student.maxP);//
+                                        count++;
+                                        Student.maxP = 0;
+                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                     }
                                 }
 
@@ -1559,10 +1600,14 @@ class Master {
                             letA = "B";
 
                         x.periodsTrying.add("" + (a + 1) / 2 + letA);
+                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                     }
-                    x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
 
+                    x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
+                    numPermsArray.get(count).add(Student.maxP);//
+                    count++;
+                    Student.maxP = 0;
+                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                 }
             }
 
@@ -1592,9 +1637,14 @@ class Master {
 
 
                             x.periodsTrying.add("" + (a + 1) / 2 + letA + " " + (b + 1) / 2 + letB);
+                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                         }
+
                         x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                        numPermsArray.get(count).add(Student.maxP);//
+                        count++;
+                        Student.maxP = 0;
+                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                     }
             }
 
@@ -1632,10 +1682,14 @@ class Master {
                                     letC = "B";
 
                                 x.periodsTrying.add("" + (a + 1) / 2 + letA + " " + (b + 1) / 2 + letB + " " + (c + 1) / 2 + letC);
+                                numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                             }
-                            x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
 
+                            x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
+                            numPermsArray.get(count).add(Student.maxP);//
+                            count++;
+                            Student.maxP = 0;
+                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                         }
             }
 
@@ -1681,11 +1735,14 @@ class Master {
                                     else
                                         letD = "B";
                                     x.periodsTrying.add("" + (a + 1) / 2 + letA + " " + (b + 1) / 2 + letB + " " + (c + 1) / 2 + letC + " " + (d + 1) / 2 + letD);
+                                    numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                                 }
 
                                 x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
-
+                                numPermsArray.get(count).add(Student.maxP);//
+                                count++;
+                                Student.maxP = 0;
+                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                             }
             }
 
@@ -1740,12 +1797,14 @@ class Master {
                                         else
                                             letE = "B";
                                         x.periodsTrying.add("" + (a + 1) / 2 + letA + " " + (b + 1) / 2 + letB + " " + (c + 1) / 2 + letC + " " + (d + 1) / 2 + letD + " " + (e + 1) / 2 + letE);
+                                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                                     }
 
                                     x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
-
-
+                                    numPermsArray.get(count).add(Student.maxP);//
+                                    count++;
+                                    Student.maxP = 0;
+                                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                 }
             }
 
@@ -1809,11 +1868,14 @@ class Master {
                                             else
                                                 letF = "B";
                                             x.periodsTrying.add("" + (a + 1) / 2 + letA + " " + (b + 1) / 2 + letB + " " + (c + 1) / 2 + letC + " " + (d + 1) / 2 + letD + " " + (e + 1) / 2 + letE + " " + (f + 1) / 2 + letF);
+                                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
                                         }
+
                                         x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
-
-
+                                        numPermsArray.get(count).add(Student.maxP);//
+                                        count++;
+                                        Student.maxP = 0;
+                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                     }
             }
 
@@ -2133,10 +2195,16 @@ class Master {
                         trying1.add(triers[a][2]);
                         trying.add(trying1);
                         x.roster.get(i).temp1.add(trying);
-                        if (i == 0)
+                        if (i == 0) {
                             x.periodsTrying.add("" + tryString[a][0] + tryString[a][1] + tryString[a][2]);
+                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                        }
+
                         x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                        numPermsArray.get(count).add(Student.maxP);//
+                        count++;
+                        Student.maxP = 0;
+                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                     }
                 }
                 if (sect == 2) {
@@ -2154,10 +2222,16 @@ class Master {
                             trying2.add(triers[b][2]);
                             trying.add(trying2);
                             x.roster.get(i).temp1.add(trying);
-                            if (i == 0)
+                            if (i == 0) {
                                 x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2]);
+                                numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                            }
+
                             x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                            numPermsArray.get(count).add(Student.maxP);//
+                            count++;
+                            Student.maxP = 0;
+                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                         }
                 }
                 if (sect == 3) {
@@ -2181,10 +2255,16 @@ class Master {
                                 trying3.add(triers[c][2]);
                                 trying.add(trying3);
                                 x.roster.get(i).temp1.add(trying);
-                                if (i == 0)
+                                if (i == 0) {
                                     x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2]);
+                                    numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                }
+
                                 x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                numPermsArray.get(count).add(Student.maxP);//
+                                count++;
+                                Student.maxP = 0;
+                                x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                             }
                 }
                 if (sect == 4) {
@@ -2215,10 +2295,16 @@ class Master {
                                     trying.add(trying4);
 
                                     x.roster.get(i).temp1.add(trying);
-                                    if (i == 0)
+                                    if (i == 0) {
                                         x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2] + " " + tryString[d][0] + "" + tryString[d][1] + "" + tryString[d][2]);
+                                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                    }
+
                                     x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                    numPermsArray.get(count).add(Student.maxP);//
+                                    count++;
+                                    Student.maxP = 0;
+                                    x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                 }
                 }
                 if (sect == 5) {
@@ -2254,13 +2340,19 @@ class Master {
                                         trying5.add(triers[e][2]);
                                         trying.add(trying5);
                                         x.roster.get(i).temp1.add(trying);
-                                        if (i == 0)
+                                        if (i == 0) {
                                             x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2] + " " + tryString[d][0] + "" + tryString[d][1] + "" + tryString[d][2] + " " + tryString[e][0] + "" + tryString[e][1] + "" + tryString[e][2]);
+                                            numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                        }
+
                                         x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                        numPermsArray.get(count).add(Student.maxP);//
+                                        count++;
+                                        Student.maxP = 0;
+                                        x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                     }
                 }
-                //working on stuff below here
+
                 if (sect == 6) {
                     for (int a = 0; a < triers.length - 4; a++)
                         for (int b = a + 1; b < triers.length - 3; b++)
@@ -2300,17 +2392,27 @@ class Master {
                                             trying6.add(triers[f][2]);
                                             trying.add(trying6);
                                             x.roster.get(i).temp1.add(trying);
-                                            if (i == 0)
+                                            if (i == 0) {
                                                 x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2] + " " + tryString[d][0] + "" + tryString[d][1] + "" + tryString[d][2] + " " + tryString[e][0] + "" + tryString[e][1] + "" + tryString[e][2] + " " + tryString[f][0] + "" + tryString[f][1] + "" + tryString[f][2]);
+                                                numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                                            }
+
                                             x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
-                                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round
+                                            numPermsArray.get(count).add(Student.maxP);//
+                                            count++;
+                                            Student.maxP = 0;
+                                            x.roster.get(i).temp1.remove(x.roster.get(i).temp1.size() - 1);//removes trying for next round, not sure this is necessary
                                         }
                 }
 
 
             }
         }
+        //sorting numPermsArray below
+        for (int i = 0; i < numPermsArray.size(); i++) {
+            Collections.sort(numPermsArray.get(i));
 
+        }
 
         for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
         {
@@ -2321,7 +2423,22 @@ class Master {
                 if (x.roster.get(j).conflict.get(i))
                     count++;
             }
+
             System.out.print(count + "  conflicts ");
+
+            //insert the numPermArrays stuff here
+
+//			System.out.print(numPermsArray.get(i)); numPermArray has to be sorted for loop below to work correctly.
+
+            for (int j = 1; j <= numPermsArray.get(i).get(numPermsArray.get(i).size() - 1); j++) {
+                int counter = 0;
+                for (int k = 0; k < numPermsArray.get(i).size(); k++) {
+                    if (numPermsArray.get(i).get(k) == j)
+                        counter++;
+                }
+                System.out.print(counter + "" + "(" + j + ")" + " ");
+            }
+
             for (int k = 0; k < x.roster.size(); k++)//for each student
                 if (x.roster.get(k).conflict.get(i))
                     System.out.print(" " + x.roster.get(k).name + " ");
@@ -2345,6 +2462,7 @@ class Course {
     ArrayList<ArrayList<Integer>> periods;
     ArrayList<String> periodsTrying;
     ArrayList<Student> conflictedStudents;
+
     int numSecs;
     double lab;
     boolean posted = false;
@@ -2386,6 +2504,8 @@ class Course {
 }
 
 class Student implements Comparable<Student> {
+    static int maxP;//max number of permutations, just a holder
+    int maxPerm;//max number of permutations
     String name;
     int grade;
     int able;
@@ -2397,14 +2517,8 @@ class Student implements Comparable<Student> {
     ArrayList<Boolean> conflict;
     int numConflicts = 0;
     ArrayList<ArrayList<Course>> stuConflicts = new ArrayList<>();
-    static int maxPerms = 0;
 
     int before = 0;
-
-    public int compareTo(Student x) {
-
-        return name.compareTo(x.name);
-    }
 
     public Student(String name, int grade) {
         this(name);
@@ -2420,6 +2534,11 @@ class Student implements Comparable<Student> {
         temp3 = new ArrayList<>();
         conflict = new ArrayList<>();
 
+    }
+
+    public int compareTo(Student x) {
+
+        return name.compareTo(x.name);
     }
 
     public String toString() {
@@ -3165,7 +3284,7 @@ public class Tester {
         x.add(ChorusABDay_621013, 3);//   2A
         x.add(CollegeWindEnsemble_637010, 13, 14);// Period 7
         x.add(HonorsWindEnsemble_638100, 13, 14);//Period 7
-        x.add(WindEnsemble_631103, 13);//    Period 7A
+        x.add(WindEnsemble_631103, 13);//	Period 7A
         x.add(ConcertBand_631010, 7, 8);// Period 4
         x.add(ConcertBand_631013, 8);  //4B
         x.add(HonorsShapersoftheWorld_108010, 15, 16); //Period 8
@@ -3215,8 +3334,11 @@ public class Tester {
         x.add(APEnglish12LitandComp_109050, 15, 16);//Period 8
         x.add(APMacroeconomics_409090, 7, 8);//Period 4
         x.add(APMacroeconomics_409090, 11, 12);//Period 6
-        x.add(HonorsPreCalculus_208110, 5, 6);//Period 3
+
         x.add(HonorsPreCalculus_208110, 9, 10);//Period 5
+        x.add(HonorsPreCalculus_208110, 15, 16);//Period 8
+        x.add(HonorsPreCalculus_208110, 13, 14);//Period 7
+        x.add(HonorsPreCalculus_208110, 5, 6);//Period 3
         x.add(HonorsComputerScience_728010, 3, 4);//Period 2
         x.add(HonorsComputerScience_728010, 9, 10);//Moved to period 6, confirm that it should stay
         x.add(Economics_401053I, 12);
@@ -3230,7 +3352,7 @@ public class Tester {
         x.add(ConstitutionalLaw_401083, 11);
         x.add(ConstitutionalLaw_401083, 15);
         x.add(ContemporaryIssues_401093, 14);/*14 16,  789 141516, 78 -- Contemp Issues 14 16 both get hit by APPhysics
-        causing a 3-way conflict AP Comp Sci, AP Pyhysics, Contemp Issues*/
+				causing a 3-way conflict AP Comp Sci, AP Pyhysics, Contemp Issues*/
         x.add(ContemporaryIssues_401093, 16);
         x.add(ComparativeLiterature_101050I, 9, 10);
         x.add(ComparativeLiterature2_101050i2, 7, 8);
@@ -3249,12 +3371,12 @@ public class Tester {
         x.add(AlgebraIITrigonometry_201080, 5, 6);
         x.add(AlgebraIITrigonometry_201080, 13, 14);
 
-        x.add(APPsychology_309120, 1, 2);
-        x.add(APPsychology_309120, 9, 10);
-        x.add(APPsychology_309120, 11, 12);
-        x.add(APPsychology_409120, 1, 2);
-        x.add(APPsychology_409120, 9, 10);
-        x.add(APPsychology_409120, 11, 12);
+//				x.add(APPsychology_309120,1,2);
+//				x.add(APPsychology_309120,9,10);
+//				x.add(APPsychology_309120,11,12);
+//				x.add(APPsychology_409120, 1,2);
+//				x.add(APPsychology_409120, 9,10);
+//				x.add(APPsychology_409120, 11,12);
 
         x.add(LearningCenter12_921004, 3, 4);
         x.add(LearningCenter12_921004, 9, 10);
@@ -3266,193 +3388,193 @@ public class Tester {
         x.add(LearningCenter12_921043, 10);
         x.add(LearningCenter12_921043, 15);
         x.add(LearningCenter12_921043, 16);
-
-        x.add(PreCalculus_201100, 5, 6);
-        x.add(PreCalculus_201100, 7, 8);
-        x.add(PreCalculus_201100, 13, 14);
-
-        x.add(CollegeMarketing_717030, 1, 2);
-        x.add(CollegeMarketing_717030, 5, 6);
-
-        x.add(APEnglish11LangandComp_109060, 1, 2);
-        x.add(APEnglish11LangandComp_109060, 9, 10);//trying out 5, was 3
-        x.add(APEnglish11LangandComp_109060, 13, 14);
-
-        x.add(English11_101040I, 15, 16);
-        x.add(English11_101040, 3, 4);
-        x.add(English11_101040, 9, 10);
-        x.add(English11_101040, 15, 16);
-
-        x.add(UnitedStatesHistory_401030I, 1, 2);
-        x.add(UnitedStatesHistory_401030, 1, 2);
-        x.add(UnitedStatesHistory_401030, 3, 4);
-        x.add(UnitedStatesHistory_401030, 7, 8);
-
-        x.add(APUSHistory_409040, 5, 6);
-        x.add(APUSHistory_409040, 11, 12);
-        x.add(APUSHistory_409040, 15, 16);
-
-        x.add(LearningCenter11_921003, 3, 4);
-        x.add(LearningCenter11_921003, 5, 6);
-        x.add(LearningCenter11_921003, 13, 14);
-        x.add(LearningCenter11_921033, 3);
-        x.add(LearningCenter11_921033, 4);
-        x.add(LearningCenter11_921033, 5);
-        x.add(LearningCenter11_921033, 6);
-        x.add(LearningCenter11_921033, 13);
-        x.add(LearningCenter11_921033, 14);
-
-        x.add(HonorsChemistrywlab_PH308060, 1, 2, 3);
-        x.add(HonorsChemistrywlab_PH308060, 7, 8, 9);
-
-        x.add(HonorsSpanish3_508160, 11, 12);
-        x.add(HonorsSpanish3_508160, 15, 16);
-
-        x.add(HonorsScienceReseach_308110, 10);
-        x.add(HonorsScienceReseach_308110, 4);
-
-        x.add(AppliedChemistry_301040, 15, 16);
-
-        x.add(Chemistrywlab_PH301050, 4, 5, 6);
-        x.add(Chemistrywlab_PH301050, 7, 9, 10);
-        x.add(Chemistrywlab_PH301050, 15, 16, 1);
-
-        x.add(Health_881063, 2);
-        x.add(Health_881063, 3);
-        x.add(Health_881063, 4);
-        x.add(Health_881063, 8);
-        x.add(Health_881063, 10);
-
-        x.add(StudioinArtII_611033, 4);
-        x.add(StudioinArtII_611033, 13);
-
-        x.add(PhotoII_611083, 3);
-        x.add(PhotoII_611083, 14);
-
-        x.add(DigitalPhotography_611093, 9);
-        x.add(DigitalPhotography_611093, 13);
-
-        x.add(Geometry_201050, 7, 8);
-        x.add(Geometry_201050, 11, 12);
-        x.add(GeometryB_201040, 5, 6);
-
-        x.add(AlgebraIYr2_201210, 1, 2);
-
-        x.add(IntroductionToPsychology_401070, 7, 8);
-
-        x.add(HonorsAlgebraIITrigonometry_208090, 1, 2);
-        x.add(HonorsAlgebraIITrigonometry_208090, 5, 6);
-        x.add(HonorsAlgebraIITrigonometry_208090, 15, 16);
-
-        x.add(English10_101030, 1, 2);
-        x.add(English10_101030, 5, 6);
-        x.add(English10_101030, 7, 8);
-        x.add(English10_101030, 11, 12);
-        x.add(English10_101030, 3, 4);
-        x.add(English10_101030I, 7, 8);
-
-        x.add(LearningCenter10_921002, 9, 10);
-        x.add(LearningCenter10_921002, 15, 16);
-        x.add(LearningCenter10_921023, 9);
-        x.add(LearningCenter10_921023, 10);
-        x.add(LearningCenter10_921023, 15);
-        x.add(LearningCenter10_921023, 16);
-
-        x.add(GlobalHistory_Geography10_401020I, 11, 12);
-
-        x.add(GlobalHistory_Geography10_401020, 5, 6);
-        x.add(GlobalHistory_Geography10_401020, 9, 10);
-        x.add(GlobalHistory_Geography10_401020, 11, 12);
-        x.add(GlobalHistory_Geography10_401020, 13, 14);
-        x.add(GlobalHistory_Geography10_401020, 15, 16);
-
-
-        x.add(TacticalSports_801063, 3);
-        x.add(TacticalSports_801063, 9);
-        x.add(TacticalSports_801063, 14);
         //
-        x.add(PersonalFitness_881053, 4);
-        x.add(PersonalFitness_881053, 13);
-        x.add(PhysicalEducation10_12_801023, 3);
-        x.add(PhysicalEducation10_12_801023, 4);
-        x.add(PhysicalEducation10_12_801023, 7);
-        x.add(PhysicalEducation10_12_801023, 10);
-        x.add(PhysicalEducation10_12_801023, 13);
-        x.add(PhysicalEducation10_12_801023, 14);
-        x.add(PhysicalEducation10_12_801023, 15);
-        x.add(PhysicalEducation10_12_801023, 16);
-        x.add(English9_101010, 15, 16, 2);
-        x.add(English9_101010, 3, 4, 5);
-        x.add(English9_101010, 3, 4, 6);
-        x.add(English9_101010, 7, 9, 10);
-        x.add(English9_101010, 9, 10, 12);
-        x.add(English9_101010, 13, 14, 16);
-        x.add(English9_101010I, 3, 4, 6);
-
-        x.add(PhysicalEducation9_801013, 1);
-        x.add(PhysicalEducation9_801013, 5);
-        x.add(PhysicalEducation9_801013, 6);
-        x.add(PhysicalEducation9_801013, 8);
-        x.add(PhysicalEducation9_801013, 11);
-        x.add(PhysicalEducation9_801013, 15);
-
-        x.add(BiologywithLAB_PH301010, 1, 2, 3);//could be 1,2,4, swapping labs with other sect
-        x.add(BiologywithLAB_PH301010, 4, 5, 6);
-        x.add(BiologywithLAB_PH301010, 5, 6, 7);
-        x.add(BiologywithLAB_PH301010, 7, 8, 10);
-        x.add(BiologywithLAB_PH301010, 11, 12, 14);
-        x.add(BiologywithLAB_PH301010, 13, 15, 16);
-        x.add(BiologywithLab_PH30101I, 7, 8, 10);
-        x.add(IntrotoHumanitiesResearch_101033s, 9);
-        x.add(AlgebrawLab_201010I, 9, 11, 12);
-        x.add(AlgebrawLab_201010, 9, 11, 12);
-        x.add(Robotics_721063, 4);
-        x.add(IntrotoScienceResearch_301033, 14);
-        x.add(Italian2_501160, 5, 6);
-        x.add(Italian2_501160, 13, 14);  // moved 8 to 7
-        x.add(HonorsGeometry_208060, 1, 2);
-        x.add(HonorsGeometry_208060, 11, 12);
-        x.add(Photography_611070, 1, 2);
-        x.add(Photography_611070, 7, 8);
-        x.add(AlgebraI_201020, 3, 4);  //moved 1 to 2
-        x.add(AlgebraI_201020, 15, 16); //moved 7 to 8
-        x.add(AlgebraIYr1_201021, 11, 12);
-        x.add(GlobalHistory_Geography9_401010I, 1, 2);
-        x.add(LearningCenter9_921013);
-        x.add(LearningCenter9_921001, 1, 2);
-        x.add(LearningCenter9_921001, 15, 16);
-        x.add(LearningCenter9_921013, 1);
-        x.add(LearningCenter9_921013, 2);
-        x.add(LearningCenter9_921013, 15);
-        x.add(LearningCenter9_921013, 16);
-        x.add(English9_101010S, 13, 14);
-        x.add(English10_101030S, 13, 14);
-
-        x.add(Accounting_711010, 7, 8);
-        x.add(Accounting_711010, 13, 14);
-        x.add(CollegeAccounting_717020, 9, 10);
-        x.add(CollegeAccounting_717020, 15, 16);
-        x.add(TheaterArtsIIPerformanceWorkshop_620203, 14);
-
-        x.add(StudioinArt_611010, 1, 2);
-        x.add(StudioinArt_611010, 9, 10);
-        x.add(StudioinArt_611010, 11, 12);
-        x.add(StudioinArt_611010, 15, 16);
-
-        x.add(Spanish2_501080, 5, 6);
-        x.add(Spanish2_501080, 13, 14);
-        x.add(Spanish2_501080, 11, 12);//was 6th, trying 8th
-
-        x.add(GlobalHistory_Geography9_401010, 1, 2);
-        x.add(GlobalHistory_Geography9_401010, 3, 4);
-        x.add(GlobalHistory_Geography9_401010, 7, 8);
-        x.add(GlobalHistory_Geography9_401010, 9, 10);
-        x.add(GlobalHistory_Geography9_401010, 15, 16);
-        x.add(Spanish1_501070, 13, 14);
-//                x.seatCount(9);
-//                x.seatCount(10);
-//                x.seatCount(11);
-//                x.seatCount(12);
+        //		x.add(PreCalculus_201100,5,6);
+        //		x.add(PreCalculus_201100,7,8);
+        //		x.add(PreCalculus_201100,13,14);
+        //
+        //		x.add(CollegeMarketing_717030,1,2);
+        //		x.add(CollegeMarketing_717030,5,6);
+        //
+        //		x.add(APEnglish11LangandComp_109060,1,2);
+        //		x.add(APEnglish11LangandComp_109060,9,10);//trying out 5, was 3
+        //		x.add(APEnglish11LangandComp_109060,13,14);
+        //
+        //		x.add(English11_101040I, 15,16);
+        //		x.add(English11_101040, 3,4);
+        //		x.add(English11_101040, 9,10);
+        //		x.add(English11_101040, 15,16);
+        //
+        //		x.add(UnitedStatesHistory_401030I,1,2);
+        //		x.add(UnitedStatesHistory_401030,1,2);
+        //		x.add(UnitedStatesHistory_401030,3,4);
+        //		x.add(UnitedStatesHistory_401030,7,8);
+        //
+        //		x.add(APUSHistory_409040,5,6);
+        //		x.add(APUSHistory_409040,11,12);
+        //		x.add(APUSHistory_409040,15,16);
+        //
+        //		x.add(LearningCenter11_921003,3,4);
+        //		x.add(LearningCenter11_921003,5,6);
+        //		x.add(LearningCenter11_921003,13,14);
+        //		x.add(LearningCenter11_921033, 3);
+        //		x.add(LearningCenter11_921033, 4);
+        //		x.add(LearningCenter11_921033, 5);
+        //		x.add(LearningCenter11_921033, 6);
+        //		x.add(LearningCenter11_921033, 13);
+        //		x.add(LearningCenter11_921033, 14);
+        //
+        //		x.add(HonorsChemistrywlab_PH308060,1,2,3);
+        //		x.add(HonorsChemistrywlab_PH308060,7,8,9);
+        //
+        //		x.add(HonorsSpanish3_508160,11,12);
+        //		x.add(HonorsSpanish3_508160, 15,16);
+        //
+        //		x.add(HonorsScienceReseach_308110,10);
+        //		x.add(HonorsScienceReseach_308110,4);
+        //
+        //		x.add(AppliedChemistry_301040,15,16);
+        //
+        //		x.add(Chemistrywlab_PH301050,4,5,6);
+        //		x.add(Chemistrywlab_PH301050,7,9,10);
+        //		x.add(Chemistrywlab_PH301050, 15,16,1);
+        //
+        //		x.add(Health_881063, 2);
+        //		x.add(Health_881063, 3);
+        //		x.add(Health_881063, 4);
+        //		x.add(Health_881063, 8);
+        //		x.add(Health_881063, 10);
+        //
+        //		x.add(StudioinArtII_611033,4);
+        //		x.add(StudioinArtII_611033,13);
+        //
+        //		x.add(PhotoII_611083,3);
+        //		x.add(PhotoII_611083,14);
+        //
+        //		x.add(DigitalPhotography_611093,9);
+        //		x.add(DigitalPhotography_611093,13);
+        //
+        //		x.add(Geometry_201050,7,8);
+        //		x.add(Geometry_201050, 11,12);
+        //		x.add(GeometryB_201040, 5,6);
+        //
+        //		x.add(AlgebraIYr2_201210,1,2);
+        //
+        //		x.add(IntroductionToPsychology_401070,7,8);
+        //
+        //		x.add(HonorsAlgebraIITrigonometry_208090,1,2);
+        //		x.add(HonorsAlgebraIITrigonometry_208090,5,6);
+        //		x.add(HonorsAlgebraIITrigonometry_208090,15,16);
+        //
+        //		x.add(English10_101030,1,2);
+        //		x.add(English10_101030, 5,6);
+        //		x.add(English10_101030, 7,8);
+        //		x.add(English10_101030, 11,12);
+        //		x.add(English10_101030, 3,4);
+        //		x.add(English10_101030I, 7,8);
+        //
+        //		x.add(LearningCenter10_921002,9,10);
+        //		x.add(LearningCenter10_921002,15,16);
+        //		x.add(LearningCenter10_921023, 9);
+        //		x.add(LearningCenter10_921023, 10);
+        //		x.add(LearningCenter10_921023, 15);
+        //		x.add(LearningCenter10_921023, 16);
+        //
+        //		x.add(GlobalHistory_Geography10_401020I,11,12);
+        //
+        //		x.add(GlobalHistory_Geography10_401020,5,6);
+        //		x.add(GlobalHistory_Geography10_401020,9,10);
+        //		x.add(GlobalHistory_Geography10_401020,11,12);
+        //		x.add(GlobalHistory_Geography10_401020,13,14);
+        //		x.add(GlobalHistory_Geography10_401020,15,16);
+        //
+        //
+        //		x.add(TacticalSports_801063,3);
+        //		x.add(TacticalSports_801063,9);
+        //		x.add(TacticalSports_801063,14);
+        //		//
+        //		x.add(PersonalFitness_881053,4);
+        //		x.add(PersonalFitness_881053,13);
+        //		x.add(PhysicalEducation10_12_801023, 3);
+        //		x.add(PhysicalEducation10_12_801023, 4);
+        //		x.add(PhysicalEducation10_12_801023, 7);
+        //		x.add(PhysicalEducation10_12_801023, 10);
+        //		x.add(PhysicalEducation10_12_801023, 13);
+        //		x.add(PhysicalEducation10_12_801023, 14);
+        //		x.add(PhysicalEducation10_12_801023, 15);
+        //		x.add(PhysicalEducation10_12_801023, 16);
+        //		x.add(English9_101010, 15,16,2);
+        //		x.add(English9_101010, 3,4,5);
+        //		x.add(English9_101010, 3,4,6);
+        //		x.add(English9_101010, 7,9,10);
+        //		x.add(English9_101010, 9,10,12);
+        //		x.add(English9_101010, 13,14,16);
+        //		x.add(English9_101010I, 3,4,6);
+        //
+        //		x.add(PhysicalEducation9_801013, 1);
+        //		x.add(PhysicalEducation9_801013, 5);
+        //		x.add(PhysicalEducation9_801013, 6);
+        //		x.add(PhysicalEducation9_801013, 8);
+        //		x.add(PhysicalEducation9_801013, 11);
+        //		x.add(PhysicalEducation9_801013, 15);
+        //
+        //		x.add(BiologywithLAB_PH301010,1,2,3);//could be 1,2,4, swapping labs with other sect
+        //		x.add(BiologywithLAB_PH301010,4,5,6);
+        //		x.add(BiologywithLAB_PH301010,5,6,7);
+        //		x.add(BiologywithLAB_PH301010,7,8,10);
+        //		x.add(BiologywithLAB_PH301010,11,12,14);
+        //		x.add(BiologywithLAB_PH301010,13,15,16);
+        //		x.add(BiologywithLab_PH30101I, 7,8,10);
+        //		x.add(IntrotoHumanitiesResearch_101033s, 9);
+        //		x.add(AlgebrawLab_201010I,9,11,12);
+        //		x.add(AlgebrawLab_201010,9,11,12);
+        //		x.add(Robotics_721063, 4);
+        //		x.add(IntrotoScienceResearch_301033, 14);
+        //		x.add(Italian2_501160,5,6);
+        //		x.add(Italian2_501160, 13,14);  // moved 8 to 7
+        //		x.add(HonorsGeometry_208060,1,2);
+        //		x.add(HonorsGeometry_208060,11,12);
+        //		x.add(Photography_611070,1,2);
+        //		x.add(Photography_611070, 7,8);
+        //		x.add(AlgebraI_201020,3,4);  //moved 1 to 2
+        //		x.add(AlgebraI_201020,15,16); //moved 7 to 8
+        //		x.add(AlgebraIYr1_201021,11,12);
+        //		x.add(GlobalHistory_Geography9_401010I,1,2);
+        //		x.add(LearningCenter9_921013);
+        //		x.add(LearningCenter9_921001,1,2);
+        //		x.add(LearningCenter9_921001,15,16);
+        //		x.add(LearningCenter9_921013, 1);
+        //		x.add(LearningCenter9_921013, 2);
+        //		x.add(LearningCenter9_921013, 15);
+        //		x.add(LearningCenter9_921013, 16);
+        //		x.add(English9_101010S, 13,14);
+        //		x.add(English10_101030S, 13,14);
+        //
+        //		x.add(Accounting_711010,7,8);
+        //		x.add(Accounting_711010,13,14);
+        //		x.add(CollegeAccounting_717020, 9,10);
+        //		x.add(CollegeAccounting_717020, 15,16);
+        //		x.add(TheaterArtsIIPerformanceWorkshop_620203,14);
+        //
+        //		x.add(StudioinArt_611010,1,2);
+        //		x.add(StudioinArt_611010,9,10);
+        //		x.add(StudioinArt_611010,11,12);
+        //		x.add(StudioinArt_611010,15,16);
+        //
+        //		x.add(Spanish2_501080,5,6);
+        //		x.add(Spanish2_501080,13,14);
+        //		x.add(Spanish2_501080,11,12);//was 6th, trying 8th
+        //
+        //		x.add(GlobalHistory_Geography9_401010,1,2);
+        //		x.add(GlobalHistory_Geography9_401010,3,4);
+        //		x.add(GlobalHistory_Geography9_401010,7,8);
+        //		x.add(GlobalHistory_Geography9_401010,9,10);
+        //		x.add(GlobalHistory_Geography9_401010,15,16);
+        //		x.add(Spanish1_501070, 13,14);
+        //				x.seatCount(9);
+        //				x.seatCount(10);
+        //				x.seatCount(11);
+        //				x.seatCount(12);
         //Accounting_711010
         //AdvancedArt_611040
         //AdvancedPhotoPortfolio_611130
@@ -3580,8 +3702,49 @@ public class Tester {
         //UnitedStatesHistory_401030I
         //WindEnsemble_631103
 
-        x.check(PersonalFitness_881053);
+
         //System.out.println(PersonalFitness_881053.roster.size());
+
+        Course A = new Course("A", "1", 2);//2 sections
+        Course B = new Course("B", "1", 2);//2 sections
+        Course C = new Course("A", "1", 2);//2 sections
+
+        Student s1 = new Student("s1", 9);
+        Student s2 = new Student("s2", 9);
+        Student s3 = new Student("s3", 9);
+        Student s4 = new Student("s4", 9);
+        Student s5 = new Student("s5", 9);
+
+        A.add(s1, s2, s3);
+        B.add(s3, s4, s5);
+        C.add(s1, s3, s5);
+
+        x.add(A, 3, 4);
+        x.add(A, 5, 6);
+        x.add(B, 3, 4);
+        x.add(B, 7, 8);
+
+        x.check(C, 1);
+
+
+//		x.check(APPsychology_309120);
+
+        //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
+
+
+
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
