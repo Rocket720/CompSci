@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+
 //Regular class (1.0) only up to 6 sections
 //Half credit courses (0.5) up to 6 sections
 //Lab classes, (1.5) only up to 6
@@ -161,7 +162,6 @@ class Master {
             }
 
 
-
         }
 
         for (int j = 0; j < conflictedCourses.size(); j++) {
@@ -266,7 +266,6 @@ class Master {
             }
             counts[p] = (int) (count + .5);
             count = 0;
-
 
 
         }
@@ -873,7 +872,6 @@ class Master {
 
                 }
             }
-
 
 
         //looking for 3 at a time
@@ -2411,38 +2409,41 @@ class Master {
         //sorting numPermsArray below
         for (int i = 0; i < numPermsArray.size(); i++) {
             Collections.sort(numPermsArray.get(i));
-
         }
-
+        int minConflicts = 100; // large in order to make sure we can get a min
+        // TODO print out all info after printing least conflicts, not sure how to loop back
         for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
         {
-            System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
             int count = 0;
             for (int j = 0; j < x.roster.size(); j++)//for each student
             {
                 if (x.roster.get(j).conflict.get(i))
                     count++;
+                minConflicts = Math.min(count, minConflicts);
             }
+            if (count == minConflicts) { //prints all perms for least amount of conflicts (preferably zero)
 
-            System.out.print(count + "  conflicts ");
+                System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
+                System.out.print(count + "  conflicts ");
 
-            //insert the numPermArrays stuff here
+                //insert the numPermArrays stuff here
 
 //			System.out.print(numPermsArray.get(i)); numPermArray has to be sorted for loop below to work correctly.
 
-            for (int j = 1; j <= numPermsArray.get(i).get(numPermsArray.get(i).size() - 1); j++) {
-                int counter = 0;
-                for (int k = 0; k < numPermsArray.get(i).size(); k++) {
-                    if (numPermsArray.get(i).get(k) == j)
-                        counter++;
+                for (int j = 1; j <= 5; j++) { // change printed perms here
+                    int counter = 0;
+                    for (int k = 0; k < numPermsArray.get(i).size(); k++) {
+                        if (numPermsArray.get(i).get(k) == j)
+                            counter++;
+                    }
+                    System.out.print(counter + " ");//+ "" + "(" + j + ")" + " ");
                 }
-                System.out.print(counter + "" + "(" + j + ")" + " ");
-            }
 
-            for (int k = 0; k < x.roster.size(); k++)//for each student
-                if (x.roster.get(k).conflict.get(i))
-                    System.out.print(" " + x.roster.get(k).name + " ");
-            System.out.println();
+                for (int k = 0; k < x.roster.size(); k++)//for each student
+                    if (x.roster.get(k).conflict.get(i))
+                        System.out.print(" " + x.roster.get(k).name + " ");
+                System.out.println();
+            }
         }
         for (int j = 0; j < x.roster.size(); j++) {
             x.roster.get(j).conflict.clear();
@@ -2450,9 +2451,7 @@ class Master {
         }
         x.periodsTrying.clear();
         //clears periodTrying for next time, not sure necessary
-
     }
-
 }
 
 class Course {
@@ -3705,46 +3704,32 @@ public class Tester {
 
         //System.out.println(PersonalFitness_881053.roster.size());
 
-        Course A = new Course("A", "1", 2);//2 sections
-        Course B = new Course("B", "1", 2);//2 sections
-        Course C = new Course("A", "1", 2);//2 sections
+//        Course A = new Course("A", "1", 2);//2 sections
+//        Course B = new Course("B", "1", 2);//2 sections
+//        Course C = new Course("A", "1", 2);//2 sections
+//
+//        Student s1 = new Student("s1", 9);
+//        Student s2 = new Student("s2", 9);
+//        Student s3 = new Student("s3", 9);
+//        Student s4 = new Student("s4", 9);
+//        Student s5 = new Student("s5", 9);
+//
+//        A.add(s1, s2, s3);
+//        B.add(s3, s4, s5);
+//        C.add(s1, s3, s5);
+//
+//        x.add(A, 3, 4);
+//        x.add(A, 5, 6);
+//        x.add(B, 3, 4);
+//        x.add(B, 7, 8);
+//
+//        x.check(C, 1);
 
-        Student s1 = new Student("s1", 9);
-        Student s2 = new Student("s2", 9);
-        Student s3 = new Student("s3", 9);
-        Student s4 = new Student("s4", 9);
-        Student s5 = new Student("s5", 9);
 
-        A.add(s1, s2, s3);
-        B.add(s3, s4, s5);
-        C.add(s1, s3, s5);
-
-        x.add(A, 3, 4);
-        x.add(A, 5, 6);
-        x.add(B, 3, 4);
-        x.add(B, 7, 8);
-
-        x.check(C, 1);
-
-
-//		x.check(APPsychology_309120);
+        x.check(APPsychology_309120);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
 
 
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
