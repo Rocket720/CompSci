@@ -2410,9 +2410,10 @@ class Master {
         for (int i = 0; i < numPermsArray.size(); i++) {
             Collections.sort(numPermsArray.get(i));
         }
-        int minConflicts = 100; // large in order to make sure we can get a min
-        boolean printAll = false;
+        int maxConflicts = 0, minConflicts = 100; // large in order to make sure we can get a min
+        boolean printAll = true;
         for (int aa = 0; aa < 2; aa++) {
+            // TODO change so loop prints all then prints again, descending based on conflicts on range (maxConflicts, maxConflicts + 2)
             for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
             {
                 int count = 0;
@@ -2445,11 +2446,10 @@ class Master {
                             System.out.print(" " + x.roster.get(k).name + " ");
                     System.out.println();
                 }
+                if (!printAll)
+                    aa = 2;
             }
-            if (!printAll) {
-                System.out.println("----------------------------------");
-            }
-            printAll = true;
+            printAll = false;
         }
         for (int j = 0; j < x.roster.size(); j++) {
             x.roster.get(j).conflict.clear();
@@ -2510,7 +2510,6 @@ class Course {
 
 class Student implements Comparable<Student> {
     static int maxP;//max number of permutations, just a holder
-    int maxPerm;//max number of permutations
     String name;
     int grade;
     int able;
