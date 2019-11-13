@@ -13,17 +13,17 @@ import java.util.Collections;
 //inputting false on the check method means that the lab doesn't have to be adjacent to the class
 /* use x.check() for total conflicts
  * x.sched(Student x) gives the student schedule, along with any conflict groups.
- * 
- * 
- * Results for 2019-2020 after Scheduling Committee: 
+ *
+ *
+ * Results for 2019-2020 after Scheduling Committee:
  * Total Students: 471
 Number of students fully scheduled:386
 Number of students Down 1 Course:83
 Number of students Down 2 Courses:2
 Number of students Down 3 Courses:0
 Number of students Down 4 Courses:0
- * 
- * 
+ *
+ *
  Made a Guidance Method for printing conflicts by student, alphabetically
  */
 class Master {
@@ -2411,39 +2411,45 @@ class Master {
             Collections.sort(numPermsArray.get(i));
         }
         int minConflicts = 100; // large in order to make sure we can get a min
-        // TODO print out all info after printing least conflicts, not sure how to loop back
-        for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
-        {
-            int count = 0;
-            for (int j = 0; j < x.roster.size(); j++)//for each student
+        boolean printAll = false;
+        for (int aa = 0; aa < 2; aa++) {
+            for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
             {
-                if (x.roster.get(j).conflict.get(i))
-                    count++;
-                minConflicts = Math.min(count, minConflicts);
-            }
-            if (count == minConflicts) { //prints all perms for least amount of conflicts (preferably zero)
+                int count = 0;
+                for (int j = 0; j < x.roster.size(); j++)//for each student
+                {
+                    if (x.roster.get(j).conflict.get(i))
+                        count++;
+                    minConflicts = Math.min(count, minConflicts);
+                }
+                if (count == minConflicts || printAll) { //prints all perms for least amount of conflicts (preferably zero)
 
-                System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
-                System.out.print(count + "  conflicts ");
+                    System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
+                    System.out.print(count + "  conflicts ");
 
-                //insert the numPermArrays stuff here
+                    //insert the numPermArrays stuff here
 
 //			System.out.print(numPermsArray.get(i)); numPermArray has to be sorted for loop below to work correctly.
 
-                for (int j = 1; j <= 5; j++) { // change printed perms here
-                    int counter = 0;
-                    for (int k = 0; k < numPermsArray.get(i).size(); k++) {
-                        if (numPermsArray.get(i).get(k) == j)
-                            counter++;
+                    for (int j = 1; j <= 5; j++) { // change printed perms here
+                        int counter = 0;
+                        for (int k = 0; k < numPermsArray.get(i).size(); k++) {
+                            if (numPermsArray.get(i).get(k) == j)
+                                counter++;
+                        }
+                        System.out.print(counter + " ");//+ "" + "(" + j + ")" + " ");
                     }
-                    System.out.print(counter + " ");//+ "" + "(" + j + ")" + " ");
-                }
 
-                for (int k = 0; k < x.roster.size(); k++)//for each student
-                    if (x.roster.get(k).conflict.get(i))
-                        System.out.print(" " + x.roster.get(k).name + " ");
-                System.out.println();
+                    for (int k = 0; k < x.roster.size(); k++)//for each student
+                        if (x.roster.get(k).conflict.get(i))
+                            System.out.print(" " + x.roster.get(k).name + " ");
+                    System.out.println();
+                }
             }
+            if (!printAll) {
+                System.out.println("----------------------------------");
+            }
+            printAll = true;
         }
         for (int j = 0; j < x.roster.size(); j++) {
             x.roster.get(j).conflict.clear();
@@ -3726,7 +3732,7 @@ public class Tester {
 //        x.check(C, 1);
 
 
-        x.check(APPsychology_309120);
+        x.check(StudioinArt_611010);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
 
