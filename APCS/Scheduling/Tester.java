@@ -301,6 +301,22 @@ class Master {
         return doesntContain;
     }
 
+    public static boolean containsAll(ArrayList<ArrayList<Integer>> y, ArrayList<ArrayList<Integer>> x) {
+        for (int i = 0; i < y.size(); i++) {
+            boolean match = false;
+            for (int j = 0; j < x.size(); j++) {
+                if (y.get(i).containsAll(x.get(j))) {
+                    match = true;
+                    break;
+                }
+
+            }
+            if (match == false)
+                return false;
+        }
+        return true;
+    }
+
     public int take3(ArrayList<ArrayList<ArrayList<Integer>>> y) {
         if (y.size() == 0)
             return 0;
@@ -312,7 +328,7 @@ class Master {
         ArrayList<Integer> tempA = new ArrayList<>();
         int max = 0;
         if (y.size() == 2) {
-//			Student.maxP = 0;
+            //            Student.maxP = 0;
             for (int a = 0; a < y.get(0).size(); a++)//a = 0, 1
             {
                 for (int b = 0; b < y.get(1).size(); b++)//b = 0
@@ -856,7 +872,7 @@ class Master {
         if (x.dif == 0)
             return;
 
-        //		ArrayList<ArrayList<Course>> myConflicts = new ArrayList<>();
+        //        ArrayList<ArrayList<Course>> myConflicts = new ArrayList<>();
 
         //looking for 2 at a time
         for (int a = 0; a < x.courses.size() - 1; a++)
@@ -918,8 +934,8 @@ class Master {
                 for (int c = b + 1; c < x.courses.size() - 1; c++)
                     for (int d = c + 1; d < x.courses.size(); d++) {
                         skip = false;
-                        //						System.out.print(a+" "+b+" "+c+" "+d);
-                        //						System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                        //                        System.out.print(a+" "+b+" "+c+" "+d);
+                        //                        System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
                         //checking to see if a,b,c,d are already conflicted
                         int counter = 0; //number of a,b,c,d that are in a particular conflict
                         for (int i = 0; i < x.stuConflicts.size(); i++) {
@@ -933,16 +949,16 @@ class Master {
                             if (x.stuConflicts.get(i).contains(x.courses.get(d)))
                                 counter++;
                             if (counter == x.stuConflicts.get(i).size()) {
-                                //								System.out.println("Skipped: "+a+" "+b+" "+c+" "+d);
+                                //                                System.out.println("Skipped: "+a+" "+b+" "+c+" "+d);
                                 skip = true;
-                                //								System.out.println(x.stuConflicts.get(i).contains(x.courses.get(a))+" "+x.stuConflicts.get(i).contains(x.courses.get(b))+" "+x.stuConflicts.get(i).contains(x.courses.get(c))+" "+x.stuConflicts.get(i).contains(x.courses.get(d)));
-                                //								System.out.println(counter+" "+x.stuConflicts.get(i).size()+" "+x.stuConflicts.get(i)+" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                                //                                System.out.println(x.stuConflicts.get(i).contains(x.courses.get(a))+" "+x.stuConflicts.get(i).contains(x.courses.get(b))+" "+x.stuConflicts.get(i).contains(x.courses.get(c))+" "+x.stuConflicts.get(i).contains(x.courses.get(d)));
+                                //                                System.out.println(counter+" "+x.stuConflicts.get(i).size()+" "+x.stuConflicts.get(i)+" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
                             }
                         }
                         if (!skip) {
-                            //							System.out.println("After skip"+a+" "+b+" "+c+" "+d);
+                            //                            System.out.println("After skip"+a+" "+b+" "+c+" "+d);
 
-                            //							System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
+                            //                            System.out.println(" "+x.courses.get(a)+" "+x.courses.get(b)+" "+x.courses.get(c)+" "+x.courses.get(d));
 
                             ArrayList<ArrayList<ArrayList<Integer>>> temp1 = new ArrayList<>();
                             temp1.add(x.courses.get(a).periods);
@@ -1339,8 +1355,8 @@ class Master {
             Student.maxP = 0;
             for (int j = 0; j < x.roster.get(i).courses.size(); j++)//for each course of those students
             {
-                //populates temp1 w periods.
-                if (x.roster.get(i).courses.get(j).posted) {
+                //populates temp1 w periods, for each kid, doesn't populate with course we are checking (thats the part after &&)
+                if (x.roster.get(i).courses.get(j).posted && !x.equals(x.roster.get(i).courses.get(j))) {
                     x.roster.get(i).temp1.add(x.roster.get(i).courses.get(j).periods);
                 }
 
@@ -1349,6 +1365,7 @@ class Master {
                 //before should have # classes schedulable before trying this one.
 
             }
+
             int count = 0;//for maxPermsArray
             if (sect == 1 && x.lab == 1)    //1 section, no lab - just regular class
             {
@@ -1359,11 +1376,14 @@ class Master {
                     trying1.add(f);
                     trying1.add(f + 1);
                     trying.add(trying1);
+                    if (!Master.containsAll(x.periods, trying)) {
+                        continue;
+                    }
                     x.roster.get(i).temp1.add(trying);
                     if (i == 0)    //just for first kid in roster
                     {
                         x.periodsTrying.add("" + (f + 1) / 2);
-                        numPermsArray.add(new ArrayList<>());//not sure about this, think its good
+                        numPermsArray.add(new ArrayList<>());
                     }
 
                     x.roster.get(i).conflict.add(x.roster.get(i).before - take3(x.roster.get(i).temp1) == 0);
@@ -1389,7 +1409,12 @@ class Master {
                         trying2.add(f + 1);
                         trying.add(trying1);
                         trying.add(trying2);
+                        if (!Master.containsAll(x.periods, trying)) {
+                            continue;
+                        }
+
                         x.roster.get(i).temp1.add(trying);
+
                         if (i == 0) {
                             x.periodsTrying.add("" + (e + 1) / 2 + " " + (f + 1) / 2);
                             numPermsArray.add(new ArrayList<>());//not sure about this, think its good
@@ -1423,6 +1448,9 @@ class Master {
                             trying.add(trying1);
                             trying.add(trying2);
                             trying.add(trying3);
+                            if (!Master.containsAll(x.periods, trying)) {
+                                continue;
+                            }
                             x.roster.get(i).temp1.add(trying);
                             if (i == 0) {
                                 x.periodsTrying.add("" + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
@@ -1465,6 +1493,9 @@ class Master {
                                 trying.add(trying2);
                                 trying.add(trying3);
                                 trying.add(trying4);
+                                if (!Master.containsAll(x.periods, trying)) {
+                                    continue;
+                                }
                                 x.roster.get(i).temp1.add(trying);
                                 if (i == 0) {
                                     x.periodsTrying.add("" + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
@@ -1512,6 +1543,9 @@ class Master {
                                     trying.add(trying3);
                                     trying.add(trying4);
                                     trying.add(trying5);
+                                    if (!Master.containsAll(x.periods, trying)) {
+                                        continue;
+                                    }
                                     x.roster.get(i).temp1.add(trying);
                                     if (i == 0) {
                                         x.periodsTrying.add("" + (b + 1) / 2 + " " + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
@@ -1567,6 +1601,9 @@ class Master {
                                         trying.add(trying4);
                                         trying.add(trying5);
                                         trying.add(trying6);
+                                        if (!Master.containsAll(x.periods, trying)) {
+                                            continue;
+                                        }
                                         x.roster.get(i).temp1.add(trying);
                                         if (i == 0) {
                                             x.periodsTrying.add("" + (a + 1) / 2 + " " + (b + 1) / 2 + " " + (c + 1) / 2 + " " + (d + 1) / 2 + " " + (e + 1) / 2 + " " + (f + 1) / 2);
@@ -1589,6 +1626,9 @@ class Master {
                     ArrayList<Integer> trying1 = new ArrayList<>();
                     trying1.add(a);
                     trying.add(trying1);
+                    if (!Master.containsAll(x.periods, trying)) {
+                        continue;
+                    }
                     x.roster.get(i).temp1.add(trying);
                     String letA;
                     if (i == 0) {
@@ -1620,6 +1660,9 @@ class Master {
                         trying2.add(b);
                         trying.add(trying1);
                         trying.add(trying2);
+                        if (!Master.containsAll(x.periods, trying)) {
+                            continue;
+                        }
                         x.roster.get(i).temp1.add(trying);
                         String letA;
                         String letB;
@@ -1661,6 +1704,9 @@ class Master {
                             trying.add(trying1);
                             trying.add(trying2);
                             trying.add(trying3);
+                            if (!Master.containsAll(x.periods, trying)) {
+                                continue;
+                            }
                             x.roster.get(i).temp1.add(trying);
                             String letA;
                             String letB;
@@ -1710,6 +1756,9 @@ class Master {
                                 trying.add(trying2);
                                 trying.add(trying3);
                                 trying.add(trying4);
+                                if (!Master.containsAll(x.periods, trying)) {
+                                    continue;
+                                }
                                 x.roster.get(i).temp1.add(trying);
                                 String letA;
                                 String letB;
@@ -1767,6 +1816,9 @@ class Master {
                                     trying.add(trying3);
                                     trying.add(trying4);
                                     trying.add(trying5);
+                                    if (!Master.containsAll(x.periods, trying)) {
+                                        continue;
+                                    }
                                     x.roster.get(i).temp1.add(trying);
                                     String letA;
                                     String letB;
@@ -1833,6 +1885,9 @@ class Master {
                                         trying.add(trying4);
                                         trying.add(trying5);
                                         trying.add(trying6);
+                                        if (!Master.containsAll(x.periods, trying)) {
+                                            continue;
+                                        }
                                         x.roster.get(i).temp1.add(trying);
                                         String letA;
                                         String letB;
@@ -2192,6 +2247,9 @@ class Master {
                         trying1.add(triers[a][1]);
                         trying1.add(triers[a][2]);
                         trying.add(trying1);
+                        if (!Master.containsAll(x.periods, trying)) {
+                            continue;
+                        }
                         x.roster.get(i).temp1.add(trying);
                         if (i == 0) {
                             x.periodsTrying.add("" + tryString[a][0] + tryString[a][1] + tryString[a][2]);
@@ -2219,6 +2277,9 @@ class Master {
                             trying2.add(triers[b][1]);
                             trying2.add(triers[b][2]);
                             trying.add(trying2);
+                            if (!Master.containsAll(x.periods, trying)) {
+                                continue;
+                            }
                             x.roster.get(i).temp1.add(trying);
                             if (i == 0) {
                                 x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2]);
@@ -2252,6 +2313,9 @@ class Master {
                                 trying3.add(triers[c][1]);
                                 trying3.add(triers[c][2]);
                                 trying.add(trying3);
+                                if (!Master.containsAll(x.periods, trying)) {
+                                    continue;
+                                }
                                 x.roster.get(i).temp1.add(trying);
                                 if (i == 0) {
                                     x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2]);
@@ -2291,6 +2355,9 @@ class Master {
                                     trying4.add(triers[d][1]);
                                     trying4.add(triers[d][2]);
                                     trying.add(trying4);
+                                    if (!Master.containsAll(x.periods, trying)) {
+                                        continue;
+                                    }
 
                                     x.roster.get(i).temp1.add(trying);
                                     if (i == 0) {
@@ -2337,6 +2404,9 @@ class Master {
                                         trying5.add(triers[e][1]);
                                         trying5.add(triers[e][2]);
                                         trying.add(trying5);
+                                        if (!Master.containsAll(x.periods, trying)) {
+                                            continue;
+                                        }
                                         x.roster.get(i).temp1.add(trying);
                                         if (i == 0) {
                                             x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2] + " " + tryString[d][0] + "" + tryString[d][1] + "" + tryString[d][2] + " " + tryString[e][0] + "" + tryString[e][1] + "" + tryString[e][2]);
@@ -2389,6 +2459,9 @@ class Master {
                                             trying6.add(triers[f][1]);
                                             trying6.add(triers[f][2]);
                                             trying.add(trying6);
+                                            if (!Master.containsAll(x.periods, trying)) {
+                                                continue;
+                                            }
                                             x.roster.get(i).temp1.add(trying);
                                             if (i == 0) {
                                                 x.periodsTrying.add("" + tryString[a][0] + "" + tryString[a][1] + "" + tryString[a][2] + " " + tryString[b][0] + "" + tryString[b][1] + "" + tryString[b][2] + " " + tryString[c][0] + "" + tryString[c][1] + "" + tryString[c][2] + " " + tryString[d][0] + "" + tryString[d][1] + "" + tryString[d][2] + " " + tryString[e][0] + "" + tryString[e][1] + "" + tryString[e][2] + " " + tryString[f][0] + "" + tryString[f][1] + "" + tryString[f][2]);
@@ -2409,11 +2482,12 @@ class Master {
         //sorting numPermsArray below
         for (int i = 0; i < numPermsArray.size(); i++) {
             Collections.sort(numPermsArray.get(i));
+
         }
-        int maxConflicts = 0, minConflicts = 100; // large in order to make sure we can get a min
+
         boolean printAll = true;
+        int minConflicts = 100;
         for (int aa = 0; aa < 2; aa++) {
-            // TODO change so loop prints all then prints again, descending based on conflicts on range (maxConflicts, maxConflicts + 2)
             for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
             {
                 int count = 0;
@@ -2423,22 +2497,23 @@ class Master {
                         count++;
                     minConflicts = Math.min(count, minConflicts);
                 }
-                if (count == minConflicts || printAll) { //prints all perms for least amount of conflicts (preferably zero)
-
+                if (printAll || count == minConflicts) {
                     System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
                     System.out.print(count + "  conflicts ");
 
                     //insert the numPermArrays stuff here
+                    //numPermArray has to be sorted for loop below to work correctly, not true with j <=5,
+                    //            System.out.print(numPermsArray.get(i));
 
-//			System.out.print(numPermsArray.get(i)); numPermArray has to be sorted for loop below to work correctly.
 
-                    for (int j = 1; j <= 5; j++) { // change printed perms here
+                    for (int j = 1; j <= 5; j++) {
                         int counter = 0;
                         for (int k = 0; k < numPermsArray.get(i).size(); k++) {
                             if (numPermsArray.get(i).get(k) == j)
                                 counter++;
                         }
-                        System.out.print(counter + " ");//+ "" + "(" + j + ")" + " ");
+                        //                if (counter!=0)
+                        System.out.print(counter + " ");
                     }
 
                     for (int k = 0; k < x.roster.size(); k++)//for each student
@@ -2446,18 +2521,21 @@ class Master {
                             System.out.print(" " + x.roster.get(k).name + " ");
                     System.out.println();
                 }
-                if (!printAll)
-                    aa = 2;
+            }
+
+            if (printAll) {
+                System.out.println("---------------------------------"); // just to separate data
             }
             printAll = false;
         }
-        for (int j = 0; j < x.roster.size(); j++) {
+        for (int j = 0; j < x.roster.size(); j++) { // taken out of aa loop
             x.roster.get(j).conflict.clear();
             //clears conflict ArrayList for next time, not sure necessary
         }
         x.periodsTrying.clear();
         //clears periodTrying for next time, not sure necessary
     }
+
 }
 
 class Course {
@@ -2510,6 +2588,7 @@ class Course {
 
 class Student implements Comparable<Student> {
     static int maxP;//max number of permutations, just a holder
+    int maxPerm;//max number of permutations
     String name;
     int grade;
     int able;
@@ -2523,6 +2602,11 @@ class Student implements Comparable<Student> {
     ArrayList<ArrayList<Course>> stuConflicts = new ArrayList<>();
 
     int before = 0;
+
+    public int compareTo(Student x) {
+
+        return name.compareTo(x.name);
+    }
 
     public Student(String name, int grade) {
         this(name);
@@ -2538,11 +2622,6 @@ class Student implements Comparable<Student> {
         temp3 = new ArrayList<>();
         conflict = new ArrayList<>();
 
-    }
-
-    public int compareTo(Student x) {
-
-        return name.compareTo(x.name);
     }
 
     public String toString() {
@@ -3288,7 +3367,7 @@ public class Tester {
         x.add(ChorusABDay_621013, 3);//   2A
         x.add(CollegeWindEnsemble_637010, 13, 14);// Period 7
         x.add(HonorsWindEnsemble_638100, 13, 14);//Period 7
-        x.add(WindEnsemble_631103, 13);//	Period 7A
+        x.add(WindEnsemble_631103, 13);//    Period 7A
         x.add(ConcertBand_631010, 7, 8);// Period 4
         x.add(ConcertBand_631013, 8);  //4B
         x.add(HonorsShapersoftheWorld_108010, 15, 16); //Period 8
@@ -3356,13 +3435,13 @@ public class Tester {
         x.add(ConstitutionalLaw_401083, 11);
         x.add(ConstitutionalLaw_401083, 15);
         x.add(ContemporaryIssues_401093, 14);/*14 16,  789 141516, 78 -- Contemp Issues 14 16 both get hit by APPhysics
-				causing a 3-way conflict AP Comp Sci, AP Pyhysics, Contemp Issues*/
+                causing a 3-way conflict AP Comp Sci, AP Pyhysics, Contemp Issues*/
         x.add(ContemporaryIssues_401093, 16);
-        x.add(ComparativeLiterature_101050I, 9, 10);
-        x.add(ComparativeLiterature2_101050i2, 7, 8);
-        x.add(ComparativeLiterature_101050, 7, 8);
+//        x.add(ComparativeLiterature_101050I, 9,10);
+//        x.add(ComparativeLiterature2_101050i2, 7,8);
+//        x.add(ComparativeLiterature_101050, 7,8);
         x.add(ComparativeLiterature_101050, 9, 10);
-        x.add(ComparativeLiterature_101050, 13, 14);
+//        x.add(ComparativeLiterature_101050, 13,14);
         x.add(LatinI_501200, 1, 2);
         x.add(Spanish4_501100, 1, 2);
         x.add(Spanish4_501100, 11, 12);
@@ -3375,12 +3454,12 @@ public class Tester {
         x.add(AlgebraIITrigonometry_201080, 5, 6);
         x.add(AlgebraIITrigonometry_201080, 13, 14);
 
-//				x.add(APPsychology_309120,1,2);
-//				x.add(APPsychology_309120,9,10);
-//				x.add(APPsychology_309120,11,12);
-//				x.add(APPsychology_409120, 1,2);
-//				x.add(APPsychology_409120, 9,10);
-//				x.add(APPsychology_409120, 11,12);
+        x.add(APPsychology_309120, 1, 2);
+        x.add(APPsychology_309120, 9, 10);
+        x.add(APPsychology_309120, 11, 12);
+        x.add(APPsychology_409120, 1, 2);
+        x.add(APPsychology_409120, 9, 10);
+        x.add(APPsychology_409120, 11, 12);
 
         x.add(LearningCenter12_921004, 3, 4);
         x.add(LearningCenter12_921004, 9, 10);
@@ -3392,193 +3471,193 @@ public class Tester {
         x.add(LearningCenter12_921043, 10);
         x.add(LearningCenter12_921043, 15);
         x.add(LearningCenter12_921043, 16);
+
+        x.add(PreCalculus_201100, 5, 6);
+        x.add(PreCalculus_201100, 7, 8);
+        x.add(PreCalculus_201100, 13, 14);
+
+        x.add(CollegeMarketing_717030, 1, 2);
+        x.add(CollegeMarketing_717030, 5, 6);
+
+        x.add(APEnglish11LangandComp_109060, 1, 2);
+        x.add(APEnglish11LangandComp_109060, 9, 10);//trying out 5, was 3
+        x.add(APEnglish11LangandComp_109060, 13, 14);
+
+        x.add(English11_101040I, 15, 16);
+        x.add(English11_101040, 3, 4);
+        x.add(English11_101040, 9, 10);
+        x.add(English11_101040, 15, 16);
+
+        x.add(UnitedStatesHistory_401030I, 1, 2);
+        x.add(UnitedStatesHistory_401030, 1, 2);
+        x.add(UnitedStatesHistory_401030, 3, 4);
+        x.add(UnitedStatesHistory_401030, 7, 8);
+
+        x.add(APUSHistory_409040, 5, 6);
+        x.add(APUSHistory_409040, 11, 12);
+        x.add(APUSHistory_409040, 15, 16);
+
+        x.add(LearningCenter11_921003, 3, 4);
+        x.add(LearningCenter11_921003, 5, 6);
+        x.add(LearningCenter11_921003, 13, 14);
+        x.add(LearningCenter11_921033, 3);
+        x.add(LearningCenter11_921033, 4);
+        x.add(LearningCenter11_921033, 5);
+        x.add(LearningCenter11_921033, 6);
+        x.add(LearningCenter11_921033, 13);
+        x.add(LearningCenter11_921033, 14);
+
+        x.add(HonorsChemistrywlab_PH308060, 1, 2, 3);
+        x.add(HonorsChemistrywlab_PH308060, 7, 8, 9);
+
+        x.add(HonorsSpanish3_508160, 11, 12);
+        x.add(HonorsSpanish3_508160, 15, 16);
+
+        x.add(HonorsScienceReseach_308110, 10);
+        x.add(HonorsScienceReseach_308110, 4);
+
+        x.add(AppliedChemistry_301040, 15, 16);
+
+        x.add(Chemistrywlab_PH301050, 4, 5, 6);
+        x.add(Chemistrywlab_PH301050, 7, 9, 10);
+        x.add(Chemistrywlab_PH301050, 15, 16, 1);
+
+        x.add(Health_881063, 2);
+        x.add(Health_881063, 3);
+        x.add(Health_881063, 4);
+        x.add(Health_881063, 8);
+        x.add(Health_881063, 10);
+
+        x.add(StudioinArtII_611033, 4);
+        x.add(StudioinArtII_611033, 13);
+
+        x.add(PhotoII_611083, 3);
+        x.add(PhotoII_611083, 14);
+
+        x.add(DigitalPhotography_611093, 9);
+        x.add(DigitalPhotography_611093, 13);
+
+        x.add(Geometry_201050, 7, 8);
+        x.add(Geometry_201050, 11, 12);
+        x.add(GeometryB_201040, 5, 6);
+
+        x.add(AlgebraIYr2_201210, 1, 2);
+
+        x.add(IntroductionToPsychology_401070, 7, 8);
+
+        x.add(HonorsAlgebraIITrigonometry_208090, 1, 2);
+        x.add(HonorsAlgebraIITrigonometry_208090, 5, 6);
+        x.add(HonorsAlgebraIITrigonometry_208090, 15, 16);
+
+        x.add(English10_101030, 1, 2);
+        x.add(English10_101030, 5, 6);
+        x.add(English10_101030, 7, 8);
+        x.add(English10_101030, 11, 12);
+        x.add(English10_101030, 3, 4);
+        x.add(English10_101030I, 7, 8);
+
+        x.add(LearningCenter10_921002, 9, 10);
+        x.add(LearningCenter10_921002, 15, 16);
+        x.add(LearningCenter10_921023, 9);
+        x.add(LearningCenter10_921023, 10);
+        x.add(LearningCenter10_921023, 15);
+        x.add(LearningCenter10_921023, 16);
+
+        x.add(GlobalHistory_Geography10_401020I, 11, 12);
+
+        x.add(GlobalHistory_Geography10_401020, 5, 6);
+        x.add(GlobalHistory_Geography10_401020, 9, 10);
+        x.add(GlobalHistory_Geography10_401020, 11, 12);
+        x.add(GlobalHistory_Geography10_401020, 13, 14);
+        x.add(GlobalHistory_Geography10_401020, 15, 16);
+
+
+        x.add(TacticalSports_801063, 3);
+        x.add(TacticalSports_801063, 9);
+        x.add(TacticalSports_801063, 14);
         //
-        //		x.add(PreCalculus_201100,5,6);
-        //		x.add(PreCalculus_201100,7,8);
-        //		x.add(PreCalculus_201100,13,14);
-        //
-        //		x.add(CollegeMarketing_717030,1,2);
-        //		x.add(CollegeMarketing_717030,5,6);
-        //
-        //		x.add(APEnglish11LangandComp_109060,1,2);
-        //		x.add(APEnglish11LangandComp_109060,9,10);//trying out 5, was 3
-        //		x.add(APEnglish11LangandComp_109060,13,14);
-        //
-        //		x.add(English11_101040I, 15,16);
-        //		x.add(English11_101040, 3,4);
-        //		x.add(English11_101040, 9,10);
-        //		x.add(English11_101040, 15,16);
-        //
-        //		x.add(UnitedStatesHistory_401030I,1,2);
-        //		x.add(UnitedStatesHistory_401030,1,2);
-        //		x.add(UnitedStatesHistory_401030,3,4);
-        //		x.add(UnitedStatesHistory_401030,7,8);
-        //
-        //		x.add(APUSHistory_409040,5,6);
-        //		x.add(APUSHistory_409040,11,12);
-        //		x.add(APUSHistory_409040,15,16);
-        //
-        //		x.add(LearningCenter11_921003,3,4);
-        //		x.add(LearningCenter11_921003,5,6);
-        //		x.add(LearningCenter11_921003,13,14);
-        //		x.add(LearningCenter11_921033, 3);
-        //		x.add(LearningCenter11_921033, 4);
-        //		x.add(LearningCenter11_921033, 5);
-        //		x.add(LearningCenter11_921033, 6);
-        //		x.add(LearningCenter11_921033, 13);
-        //		x.add(LearningCenter11_921033, 14);
-        //
-        //		x.add(HonorsChemistrywlab_PH308060,1,2,3);
-        //		x.add(HonorsChemistrywlab_PH308060,7,8,9);
-        //
-        //		x.add(HonorsSpanish3_508160,11,12);
-        //		x.add(HonorsSpanish3_508160, 15,16);
-        //
-        //		x.add(HonorsScienceReseach_308110,10);
-        //		x.add(HonorsScienceReseach_308110,4);
-        //
-        //		x.add(AppliedChemistry_301040,15,16);
-        //
-        //		x.add(Chemistrywlab_PH301050,4,5,6);
-        //		x.add(Chemistrywlab_PH301050,7,9,10);
-        //		x.add(Chemistrywlab_PH301050, 15,16,1);
-        //
-        //		x.add(Health_881063, 2);
-        //		x.add(Health_881063, 3);
-        //		x.add(Health_881063, 4);
-        //		x.add(Health_881063, 8);
-        //		x.add(Health_881063, 10);
-        //
-        //		x.add(StudioinArtII_611033,4);
-        //		x.add(StudioinArtII_611033,13);
-        //
-        //		x.add(PhotoII_611083,3);
-        //		x.add(PhotoII_611083,14);
-        //
-        //		x.add(DigitalPhotography_611093,9);
-        //		x.add(DigitalPhotography_611093,13);
-        //
-        //		x.add(Geometry_201050,7,8);
-        //		x.add(Geometry_201050, 11,12);
-        //		x.add(GeometryB_201040, 5,6);
-        //
-        //		x.add(AlgebraIYr2_201210,1,2);
-        //
-        //		x.add(IntroductionToPsychology_401070,7,8);
-        //
-        //		x.add(HonorsAlgebraIITrigonometry_208090,1,2);
-        //		x.add(HonorsAlgebraIITrigonometry_208090,5,6);
-        //		x.add(HonorsAlgebraIITrigonometry_208090,15,16);
-        //
-        //		x.add(English10_101030,1,2);
-        //		x.add(English10_101030, 5,6);
-        //		x.add(English10_101030, 7,8);
-        //		x.add(English10_101030, 11,12);
-        //		x.add(English10_101030, 3,4);
-        //		x.add(English10_101030I, 7,8);
-        //
-        //		x.add(LearningCenter10_921002,9,10);
-        //		x.add(LearningCenter10_921002,15,16);
-        //		x.add(LearningCenter10_921023, 9);
-        //		x.add(LearningCenter10_921023, 10);
-        //		x.add(LearningCenter10_921023, 15);
-        //		x.add(LearningCenter10_921023, 16);
-        //
-        //		x.add(GlobalHistory_Geography10_401020I,11,12);
-        //
-        //		x.add(GlobalHistory_Geography10_401020,5,6);
-        //		x.add(GlobalHistory_Geography10_401020,9,10);
-        //		x.add(GlobalHistory_Geography10_401020,11,12);
-        //		x.add(GlobalHistory_Geography10_401020,13,14);
-        //		x.add(GlobalHistory_Geography10_401020,15,16);
-        //
-        //
-        //		x.add(TacticalSports_801063,3);
-        //		x.add(TacticalSports_801063,9);
-        //		x.add(TacticalSports_801063,14);
-        //		//
-        //		x.add(PersonalFitness_881053,4);
-        //		x.add(PersonalFitness_881053,13);
-        //		x.add(PhysicalEducation10_12_801023, 3);
-        //		x.add(PhysicalEducation10_12_801023, 4);
-        //		x.add(PhysicalEducation10_12_801023, 7);
-        //		x.add(PhysicalEducation10_12_801023, 10);
-        //		x.add(PhysicalEducation10_12_801023, 13);
-        //		x.add(PhysicalEducation10_12_801023, 14);
-        //		x.add(PhysicalEducation10_12_801023, 15);
-        //		x.add(PhysicalEducation10_12_801023, 16);
-        //		x.add(English9_101010, 15,16,2);
-        //		x.add(English9_101010, 3,4,5);
-        //		x.add(English9_101010, 3,4,6);
-        //		x.add(English9_101010, 7,9,10);
-        //		x.add(English9_101010, 9,10,12);
-        //		x.add(English9_101010, 13,14,16);
-        //		x.add(English9_101010I, 3,4,6);
-        //
-        //		x.add(PhysicalEducation9_801013, 1);
-        //		x.add(PhysicalEducation9_801013, 5);
-        //		x.add(PhysicalEducation9_801013, 6);
-        //		x.add(PhysicalEducation9_801013, 8);
-        //		x.add(PhysicalEducation9_801013, 11);
-        //		x.add(PhysicalEducation9_801013, 15);
-        //
-        //		x.add(BiologywithLAB_PH301010,1,2,3);//could be 1,2,4, swapping labs with other sect
-        //		x.add(BiologywithLAB_PH301010,4,5,6);
-        //		x.add(BiologywithLAB_PH301010,5,6,7);
-        //		x.add(BiologywithLAB_PH301010,7,8,10);
-        //		x.add(BiologywithLAB_PH301010,11,12,14);
-        //		x.add(BiologywithLAB_PH301010,13,15,16);
-        //		x.add(BiologywithLab_PH30101I, 7,8,10);
-        //		x.add(IntrotoHumanitiesResearch_101033s, 9);
-        //		x.add(AlgebrawLab_201010I,9,11,12);
-        //		x.add(AlgebrawLab_201010,9,11,12);
-        //		x.add(Robotics_721063, 4);
-        //		x.add(IntrotoScienceResearch_301033, 14);
-        //		x.add(Italian2_501160,5,6);
-        //		x.add(Italian2_501160, 13,14);  // moved 8 to 7
-        //		x.add(HonorsGeometry_208060,1,2);
-        //		x.add(HonorsGeometry_208060,11,12);
-        //		x.add(Photography_611070,1,2);
-        //		x.add(Photography_611070, 7,8);
-        //		x.add(AlgebraI_201020,3,4);  //moved 1 to 2
-        //		x.add(AlgebraI_201020,15,16); //moved 7 to 8
-        //		x.add(AlgebraIYr1_201021,11,12);
-        //		x.add(GlobalHistory_Geography9_401010I,1,2);
-        //		x.add(LearningCenter9_921013);
-        //		x.add(LearningCenter9_921001,1,2);
-        //		x.add(LearningCenter9_921001,15,16);
-        //		x.add(LearningCenter9_921013, 1);
-        //		x.add(LearningCenter9_921013, 2);
-        //		x.add(LearningCenter9_921013, 15);
-        //		x.add(LearningCenter9_921013, 16);
-        //		x.add(English9_101010S, 13,14);
-        //		x.add(English10_101030S, 13,14);
-        //
-        //		x.add(Accounting_711010,7,8);
-        //		x.add(Accounting_711010,13,14);
-        //		x.add(CollegeAccounting_717020, 9,10);
-        //		x.add(CollegeAccounting_717020, 15,16);
-        //		x.add(TheaterArtsIIPerformanceWorkshop_620203,14);
-        //
-        //		x.add(StudioinArt_611010,1,2);
-        //		x.add(StudioinArt_611010,9,10);
-        //		x.add(StudioinArt_611010,11,12);
-        //		x.add(StudioinArt_611010,15,16);
-        //
-        //		x.add(Spanish2_501080,5,6);
-        //		x.add(Spanish2_501080,13,14);
-        //		x.add(Spanish2_501080,11,12);//was 6th, trying 8th
-        //
-        //		x.add(GlobalHistory_Geography9_401010,1,2);
-        //		x.add(GlobalHistory_Geography9_401010,3,4);
-        //		x.add(GlobalHistory_Geography9_401010,7,8);
-        //		x.add(GlobalHistory_Geography9_401010,9,10);
-        //		x.add(GlobalHistory_Geography9_401010,15,16);
-        //		x.add(Spanish1_501070, 13,14);
-        //				x.seatCount(9);
-        //				x.seatCount(10);
-        //				x.seatCount(11);
-        //				x.seatCount(12);
+        x.add(PersonalFitness_881053, 4);
+        x.add(PersonalFitness_881053, 13);
+        x.add(PhysicalEducation10_12_801023, 3);
+        x.add(PhysicalEducation10_12_801023, 4);
+        x.add(PhysicalEducation10_12_801023, 7);
+        x.add(PhysicalEducation10_12_801023, 10);
+        x.add(PhysicalEducation10_12_801023, 13);
+        x.add(PhysicalEducation10_12_801023, 14);
+        x.add(PhysicalEducation10_12_801023, 15);
+        x.add(PhysicalEducation10_12_801023, 16);
+        x.add(English9_101010, 15, 16, 2);
+        x.add(English9_101010, 3, 4, 5);
+        x.add(English9_101010, 3, 4, 6);
+        x.add(English9_101010, 7, 9, 10);
+        x.add(English9_101010, 9, 10, 12);
+        x.add(English9_101010, 13, 14, 16);
+        x.add(English9_101010I, 3, 4, 6);
+
+        x.add(PhysicalEducation9_801013, 1);
+        x.add(PhysicalEducation9_801013, 5);
+        x.add(PhysicalEducation9_801013, 6);
+        x.add(PhysicalEducation9_801013, 8);
+        x.add(PhysicalEducation9_801013, 11);
+        x.add(PhysicalEducation9_801013, 15);
+
+        x.add(BiologywithLAB_PH301010, 1, 2, 3);//could be 1,2,4, swapping labs with other sect
+        x.add(BiologywithLAB_PH301010, 4, 5, 6);
+        x.add(BiologywithLAB_PH301010, 5, 6, 7);
+        x.add(BiologywithLAB_PH301010, 7, 8, 10);
+        x.add(BiologywithLAB_PH301010, 11, 12, 14);
+        x.add(BiologywithLAB_PH301010, 13, 15, 16);
+        x.add(BiologywithLab_PH30101I, 7, 8, 10);
+        x.add(IntrotoHumanitiesResearch_101033s, 9);
+        x.add(AlgebrawLab_201010I, 9, 11, 12);
+        x.add(AlgebrawLab_201010, 9, 11, 12);
+        x.add(Robotics_721063, 4);
+        x.add(IntrotoScienceResearch_301033, 14);
+        x.add(Italian2_501160, 5, 6);
+        x.add(Italian2_501160, 13, 14);  // moved 8 to 7
+        x.add(HonorsGeometry_208060, 1, 2);
+        x.add(HonorsGeometry_208060, 11, 12);
+        x.add(Photography_611070, 1, 2);
+        x.add(Photography_611070, 7, 8);
+        x.add(AlgebraI_201020, 3, 4);  //moved 1 to 2
+        x.add(AlgebraI_201020, 15, 16); //moved 7 to 8
+        x.add(AlgebraIYr1_201021, 11, 12);
+        x.add(GlobalHistory_Geography9_401010I, 1, 2);
+        x.add(LearningCenter9_921013);
+        x.add(LearningCenter9_921001, 1, 2);
+        x.add(LearningCenter9_921001, 15, 16);
+        x.add(LearningCenter9_921013, 1);
+        x.add(LearningCenter9_921013, 2);
+        x.add(LearningCenter9_921013, 15);
+        x.add(LearningCenter9_921013, 16);
+        x.add(English9_101010S, 13, 14);
+        x.add(English10_101030S, 13, 14);
+
+        x.add(Accounting_711010, 7, 8);
+        x.add(Accounting_711010, 13, 14);
+        x.add(CollegeAccounting_717020, 9, 10);
+        x.add(CollegeAccounting_717020, 15, 16);
+        x.add(TheaterArtsIIPerformanceWorkshop_620203, 14);
+
+        x.add(StudioinArt_611010, 1, 2);
+        x.add(StudioinArt_611010, 9, 10);
+        x.add(StudioinArt_611010, 11, 12);
+        x.add(StudioinArt_611010, 15, 16);
+
+        x.add(Spanish2_501080, 5, 6);
+        x.add(Spanish2_501080, 13, 14);
+        x.add(Spanish2_501080, 11, 12);//was 6th, trying 8th
+
+        x.add(GlobalHistory_Geography9_401010, 1, 2);
+        x.add(GlobalHistory_Geography9_401010, 3, 4);
+        x.add(GlobalHistory_Geography9_401010, 7, 8);
+        x.add(GlobalHistory_Geography9_401010, 9, 10);
+        x.add(GlobalHistory_Geography9_401010, 15, 16);
+        x.add(Spanish1_501070, 13, 14);
+        //                x.seatCount(9);
+        //                x.seatCount(10);
+        //                x.seatCount(11);
+        //                x.seatCount(12);
         //Accounting_711010
         //AdvancedArt_611040
         //AdvancedPhotoPortfolio_611130
@@ -3709,9 +3788,9 @@ public class Tester {
 
         //System.out.println(PersonalFitness_881053.roster.size());
 
-//        Course A = new Course("A", "1", 2);//2 sections
+//        Course A = new Course("A", "1", 2, 0.5);//2 sections
 //        Course B = new Course("B", "1", 2);//2 sections
-//        Course C = new Course("A", "1", 2);//2 sections
+//        Course C = new Course("C", "1", 2);//2 sections
 //
 //        Student s1 = new Student("s1", 9);
 //        Student s2 = new Student("s2", 9);
@@ -3719,22 +3798,23 @@ public class Tester {
 //        Student s4 = new Student("s4", 9);
 //        Student s5 = new Student("s5", 9);
 //
-//        A.add(s1, s2, s3);
-//        B.add(s3, s4, s5);
-//        C.add(s1, s3, s5);
+//        A.add(s1, s2, s3);//                A: (3), (5), (11)
+//        B.add(s3, s4, s5);//                B: (3,4), (7,8)
+//        C.add(s1, s3, s5);//                C:(11,12), (15,16)
 //
-//        x.add(A, 3, 4);
-//        x.add(A, 5, 6);
+//        x.add(A, 3);
+//        x.add(A, 5);
 //        x.add(B, 3, 4);
 //        x.add(B, 7, 8);
+//        x.add(C, 11, 12);
+//        x.add(C, 15, 16);
 //
-//        x.check(C, 1);
+//
+//        x.check(A, 3);
 
-
-        x.check(StudioinArt_611010);
+        x.check(ComparativeLiterature_101050);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
-
 
     }
 }
