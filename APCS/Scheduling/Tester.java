@@ -2486,7 +2486,7 @@ class Master {
         }
 
         boolean printAll = true;
-        int minConflicts = 100;
+        int minConflicts = 100, conflictCount = 0;
         for (int aa = 0; aa < 2; aa++) {
             for (int i = 0; i < x.periodsTrying.size(); i++)//for each possible arrangement of periods
             {
@@ -2496,7 +2496,11 @@ class Master {
                     if (x.roster.get(j).conflict.get(i))
                         count++;
                 }
-                minConflicts = Math.min(count, minConflicts);
+                if (Math.min(count, minConflicts) != minConflicts) {
+                    minConflicts = Math.min(count, minConflicts);
+                    conflictCount = 1;
+                } else if (count == minConflicts)
+                    conflictCount++;
                 if (printAll || count == minConflicts) {
                     System.out.print("Periods: " + x.periodsTrying.get(i) + " - ");
                     System.out.print(count + "  conflicts ");
@@ -2522,10 +2526,13 @@ class Master {
                     System.out.println();
                 }
             }
+            if (conflictCount >= .75 * x.periodsTrying.size()) //TODO change limitation size here
+                break; // won't print rest of data if enough of data is good
 
             if (printAll) {
                 System.out.println("---------------------------------"); // just to separate data
             }
+
             printAll = false;
         }
         for (int j = 0; j < x.roster.size(); j++) { // taken out of aa loop
@@ -3422,8 +3429,8 @@ public class Tester {
         x.add(HonorsPreCalculus_208110, 15, 16);//Period 8
         x.add(HonorsPreCalculus_208110, 13, 14);//Period 7
         x.add(HonorsPreCalculus_208110, 5, 6);//Period 3
-//        x.add(HonorsComputerScience_728010, 3, 4);//Period 2
-//        x.add(HonorsComputerScience_728010, 9, 10);//Moved to period 6, confirm that it should stay
+        x.add(HonorsComputerScience_728010, 3, 4);//Period 2
+        x.add(HonorsComputerScience_728010, 9, 10);//Moved to period 6, confirm that it should stay
         x.add(Economics_401053I, 12);
         x.add(ConstitutionalLaw_401083I, 11);
         x.add(Economics_401053, 3);
@@ -3437,11 +3444,11 @@ public class Tester {
         x.add(ContemporaryIssues_401093, 14);/*14 16,  789 141516, 78 -- Contemp Issues 14 16 both get hit by APPhysics
                 causing a 3-way conflict AP Comp Sci, AP Physics, Contemp Issues*/
         x.add(ContemporaryIssues_401093, 16);
-//        x.add(ComparativeLiterature_101050I, 9,10);
-//        x.add(ComparativeLiterature2_101050i2, 7,8);
-//        x.add(ComparativeLiterature_101050, 7,8);
-//        x.add(ComparativeLiterature_101050, 9, 10);
-//        x.add(ComparativeLiterature_101050, 13,14);
+        x.add(ComparativeLiterature_101050I, 9, 10);
+        x.add(ComparativeLiterature2_101050i2, 7, 8);
+        x.add(ComparativeLiterature_101050, 7, 8);
+        x.add(ComparativeLiterature_101050, 9, 10);
+        x.add(ComparativeLiterature_101050, 13, 14);
         x.add(LatinI_501200, 1, 2);
         x.add(Spanish4_501100, 1, 2);
         x.add(Spanish4_501100, 11, 12);
@@ -3513,8 +3520,8 @@ public class Tester {
         x.add(HonorsSpanish3_508160, 11, 12);
         x.add(HonorsSpanish3_508160, 15, 16);
 
-//        x.add(HonorsScienceReseach_308110, 10);
-//        x.add(HonorsScienceReseach_308110, 4);
+        x.add(HonorsScienceReseach_308110, 10);
+        x.add(HonorsScienceReseach_308110, 4);
 
         x.add(AppliedChemistry_301040, 15, 16);
 
@@ -3565,11 +3572,11 @@ public class Tester {
 
         x.add(GlobalHistory_Geography10_401020I, 11, 12);
 
-//        x.add(GlobalHistory_Geography10_401020, 5, 6);
-//        x.add(GlobalHistory_Geography10_401020, 9, 10);
+        x.add(GlobalHistory_Geography10_401020, 5, 6);
+        x.add(GlobalHistory_Geography10_401020, 9, 10);
         x.add(GlobalHistory_Geography10_401020, 11, 12);
-//        x.add(GlobalHistory_Geography10_401020, 13, 14);
-//        x.add(GlobalHistory_Geography10_401020, 15, 16);
+        x.add(GlobalHistory_Geography10_401020, 13, 14);
+        x.add(GlobalHistory_Geography10_401020, 15, 16);
 
 
         x.add(TacticalSports_801063, 3);
@@ -3812,7 +3819,7 @@ public class Tester {
 //
 //        x.check(A, 3);
 
-        x.check();
+        x.check(AlgebrawLab_201010);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
 
