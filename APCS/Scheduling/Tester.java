@@ -259,8 +259,18 @@ class Master {
                             countEach++;
                         }
                     }
-                    count += yes * countEach / master.get(i).numSecs;
+                    if(master.get(i).number.charAt(master.get(i).number.length() - 1) == 'I'){ //if class is inclusive
+                        for(int aa = 0; aa < master.size(); aa++){
+                            if(master.get(i).name.substring(0, master.get(i).name.length() - 1).equals(master.get(aa).name)) {
+                                count += yes * countEach / master.get(aa).numSecs; //included kids balanced out between class periods
+                                break;
+                            }
+                        }
+                    }
+                    else
+                        count += yes * countEach / master.get(i).numSecs;
                 }
+
                 yes = 0;
                 countEach = 0;
             }
@@ -3661,10 +3671,7 @@ public class Tester {
         x.add(GlobalHistory_Geography9_401010, 9, 10);
         x.add(GlobalHistory_Geography9_401010, 15, 16);
         x.add(Spanish1_501070, 13, 14);
-        //                x.seatCount(9);
-        //                x.seatCount(10);
-        //                x.seatCount(11);
-        //                x.seatCount(12);
+
         //Accounting_711010
         //AdvancedArt_611040
         //AdvancedPhotoPortfolio_611130
@@ -3819,7 +3826,10 @@ public class Tester {
 //
 //        x.check(A, 3);
 
-        x.check(AlgebrawLab_201010);
+        x.seatCount(9);
+        x.seatCount(10);
+        x.seatCount(11);
+        x.seatCount(12);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
 
