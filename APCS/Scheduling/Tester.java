@@ -259,10 +259,13 @@ class Master {
                             countEach++;
                         }
                     }
-                    if(master.get(i).number.charAt(master.get(i).number.length() - 1) == 'I'){ //if class is inclusive
-                        for(int aa = 0; aa < master.size(); aa++){
-                            if(master.get(i).name.substring(0, master.get(i).name.length() - 1).equals(master.get(aa).name)) {
-                                count += yes * countEach / master.get(aa).numSecs; //included kids balanced out between class periods
+                    if(master.get(i).number.charAt(master.get(i).number.length() - 1) == 'I' || master.get(i).number.charAt(master.get(i).number.length() - 1) == 'i'){ //if class is inclusive
+                        for(Course course : master){ // searching for matching class, need to search in case not added in order
+                            if(master.get(i).name.substring(0, master.get(i).name.length() - 1).equals(course.name)) { //if the name of inclusive class not including "I" == name of found class
+                                for(int ab = 0; ab < course.periods.size(); ab++){ // for each "period" stored in class
+                                    for(Integer per : course.periods.get(ab)) // for each period in ArrayList
+                                        counts[per - 1] += Math.round(yes * countEach / course.numSecs); // add number of distributed student to all periods in regular class
+                                }
                                 break;
                             }
                         }
