@@ -235,7 +235,6 @@ class Master {
     }
 
     public void seatCount(int x) {
-
         double count = 0;
         double countEach = 0;
         String[] periods = {"1A", "1B", "2A", "2B", "3A", "3B", "4A", "4B", "5A", "5B", "6A", "6B", "7A", "7B", "8A", "8B"};
@@ -246,13 +245,12 @@ class Master {
             for (int i = 0; i < master.size(); i++)//for each course in the master
             {
 
-                for (int f = 0; f < master.get(i).periods.size(); f++)//for each section
+                for (int f = 0; f < master.get(i).seatedPeriods.size(); f++)//for each section
                 {
-                    if (master.get(i).periods.get(f).contains(p + 1))//
+                    if (master.get(i).seatedPeriods.get(f).contains(p + 1))//
                         yes++;//yes is the number of sections that have that period (p), usually 0 or 1, could be more
                 }
                 if (yes > 0) {
-
                     for (int j = 0; j < master.get(i).roster.size(); j++)//for each kid in course i
                     {
                         if (master.get(i).roster.get(j).grade == x) {
@@ -262,8 +260,8 @@ class Master {
                     if(master.get(i).number.charAt(master.get(i).number.length() - 1) == 'I' || master.get(i).number.charAt(master.get(i).number.length() - 1) == 'i'){ //if class is inclusive
                         for(Course course : master){ // searching for matching class, need to search in case not added in order
                             if(master.get(i).name.substring(0, master.get(i).name.length() - 1).equals(course.name)) { //if the name of inclusive class not including "I" == name of found class
-                                for(int ab = 0; ab < course.periods.size(); ab++){ // for each "period" stored in class
-                                    for(Integer per : course.periods.get(ab)) // for each period in ArrayList
+                                for (int ab = 0; ab < course.seatedPeriods.size(); ab++) { // for each "period" stored in class
+                                    for (Integer per : course.seatedPeriods.get(ab)) // for each period in ArrayList
                                         counts[per - 1] += Math.round(yes * countEach / course.numSecs); // add number of distributed student to all periods in regular class
                                 }
                                 break;
@@ -291,18 +289,20 @@ class Master {
     public void add(Course x, Integer... y) {
         if (!master.contains(x))
             master.add(x);
-        x.periods.add(new ArrayList<>(Arrays.asList(y)));
-        x.posted = true;
-        for (int i = 0; i < x.roster.size(); i++) {
-            if (!x.roster.get(i).courses.contains(x))
-                x.roster.get(i).courses.add(x);
-        }
+        if (!x.periods.contains(y)) {
+            x.periods.add(new ArrayList<>(Arrays.asList(y)));
+            x.posted = true;
+            for (int i = 0; i < x.roster.size(); i++) {
+                if (!x.roster.get(i).courses.contains(x))
+                    x.roster.get(i).courses.add(x);
+            }
 
-        for (int i = 0; i < x.roster.size(); i++) {
-            if (!students.contains(x.roster.get(i)))
-                students.add(x.roster.get(i));
+            for (int i = 0; i < x.roster.size(); i++) {
+                if (!students.contains(x.roster.get(i)))
+                    students.add(x.roster.get(i));
+            }
         }
-
+        x.seatAdd(y);
     }
 
     public boolean doesntContain(ArrayList<Integer> temp, ArrayList<Integer> tempA) {
@@ -2565,6 +2565,7 @@ class Course {
     ArrayList<ArrayList<Integer>> periods;
     ArrayList<String> periodsTrying;
     ArrayList<Student> conflictedStudents;
+    ArrayList<ArrayList<Integer>> seatedPeriods;
 
     int numSecs;
     double lab;
@@ -2585,6 +2586,7 @@ class Course {
         roster = new ArrayList<>();
         periods = new ArrayList<>();
         periodsTrying = new ArrayList<>();
+        seatedPeriods = new ArrayList<>();
         lab = 1;
         conflictedStudents = new ArrayList<>();
     }
@@ -2597,12 +2599,17 @@ class Course {
 
     public void add(Student... x) {
         roster.addAll(new ArrayList<>(Arrays.asList(x)));
+
     }
 
     public String toString() {
         return name;
     }
 
+    public void seatAdd(Integer... period) {
+        ArrayList empty = new ArrayList<>();
+        seatedPeriods.get(0).addAll(new ArrayList<>(Arrays.asList(period))); //Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+    }
 
 }
 
@@ -3830,9 +3837,9 @@ public class Tester {
 //        x.check(A, 3);
 
         x.seatCount(9);
-        x.seatCount(10);
-        x.seatCount(11);
-        x.seatCount(12);
+//        x.seatCount(10);
+//        x.seatCount(11);
+//        x.seatCount(12);
 
         //Course LearningCenter9_921013 = new Course("LearningCenter9","921013",2,0.5);
 
