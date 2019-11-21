@@ -241,44 +241,41 @@ class Master {
         double[] counts = new double[16];
         int yes = 0;
 
-        for (int p = 0; p < 16; p++) {
-            for (int i = 0; i < master.size(); i++)//for each course in the master
-            {
-
-                for (int f = 0; f < master.get(i).seatedPeriods.size(); f++)//for each section
-                {
-                    if (master.get(i).seatedPeriods.get(f).contains(p + 1))//
+        for (Course course : master) {
+            for (int p = 0; p < 16; p++) {
+                boolean checkedI = false;
+                for (int f = 0; f < course.seatedPeriods.size(); f++) {//for each section
+                    if (course.seatedPeriods.get(f).contains(p + 1))//
                         yes++;//yes is the number of sections that have that period (p), usually 0 or 1, could be more
                 }
                 if (yes > 0) {
-                    for (int j = 0; j < master.get(i).roster.size(); j++)//for each kid in course i
-                    {
-                        if (master.get(i).roster.get(j).grade == x) {
+                    for (int j = 0; j < course.roster.size(); j++) {//for each kid in course i
+                        if (course.roster.get(j).grade == x) {
                             countEach++;
                         }
                     }
-                    if(master.get(i).number.charAt(master.get(i).number.length() - 1) == 'I' || master.get(i).number.charAt(master.get(i).number.length() - 1) == 'i'){ //if class is inclusive
-                        for(Course course : master){ // searching for matching class, need to search in case not added in order
-                            if(master.get(i).name.substring(0, master.get(i).name.length() - 1).equals(course.name)) { //if the name of inclusive class not including "I" == name of found class
-                                for (int ab = 0; ab < course.seatedPeriods.size(); ab++) { // for each "period" stored in class
-                                    for (Integer per : course.seatedPeriods.get(ab)) // for each period in ArrayList
+                    if (course.number.charAt(course.number.length() - 1) == 'I' || course.number.charAt(course.number.length() - 1) == 'i') { //if class is inclusive
+                        for (Course checkCourse : master) { // searching for matching class, need to search in case not added in order
+                            if (course.name.substring(0, course.name.length() - 1).equals(checkCourse.name)) { //if the name of inclusive class not including "I" == name of found class
+                                for (int ab = 0; ab < checkCourse.seatedPeriods.size(); ab++) { // for each "period" stored in class
+                                    for (Integer per : checkCourse.seatedPeriods.get(ab)) // for each period in ArrayList
                                         counts[per - 1] += Math.round(yes * countEach / course.numSecs); // add number of distributed student to all periods in regular class
                                 }
                                 break;
                             }
                         }
-                    }
-                    else
-                        count += yes * countEach / master.get(i).numSecs;
+                        checkedI = true;
+                    } else
+                        count += yes * countEach / course.numSecs;
                 }
 
                 yes = 0;
                 countEach = 0;
+                counts[p] += (int) (count + .5);
+                count = 0;
+                if (checkedI)
+                    break;
             }
-            counts[p] = (int) (count + .5);
-            count = 0;
-
-
         }
         System.out.println("Seat Count for " + x + "th graders:");
         System.out.println();
@@ -2608,7 +2605,7 @@ class Course {
 
     public void seatAdd(Integer... period) {
         ArrayList empty = new ArrayList<>();
-        seatedPeriods.get(0).addAll(new ArrayList<>(Arrays.asList(period))); //Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+        seatedPeriods.add(new ArrayList<Integer>(Arrays.asList(period))); //Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
     }
 
 }
@@ -3620,6 +3617,7 @@ public class Tester {
         x.add(English9_101010, 9, 10, 12);
         x.add(English9_101010, 13, 14, 16);
         x.add(English9_101010I, 3, 4, 6);
+        x.add(English9_101010, 13, 14, 16);
 
         x.add(PhysicalEducation9_801013, 1);
         x.add(PhysicalEducation9_801013, 5);
