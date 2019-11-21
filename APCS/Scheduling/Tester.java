@@ -12,20 +12,20 @@ import java.util.Collections;
 //how does it handle if we double up a section - should we add it twice, think about seat counts
 //inputting false on the check method means that the lab doesn't have to be adjacent to the class
 /* use x.check() for total conflicts
- * x.sched(Student x) gives the student schedule, along with any conflict groups.
- *
- *
- * Results for 2019-2020 after Scheduling Committee:
- * Total Students: 471
+* x.sched(Student x) gives the student schedule, along with any conflict groups.
+*
+*
+* Results for 2019-2020 after Scheduling Committee:
+* Total Students: 471
 Number of students fully scheduled:386
 Number of students Down 1 Course:83
 Number of students Down 2 Courses:2
 Number of students Down 3 Courses:0
 Number of students Down 4 Courses:0
- *
- *
- Made a Guidance Method for printing conflicts by student, alphabetically
- */
+*
+*
+Made a Guidance Method for printing conflicts by student, alphabetically
+*/
 class Master {
     ArrayList<Course> master = new ArrayList<>();
     ArrayList<Course> courses = new ArrayList<>();
@@ -259,7 +259,7 @@ class Master {
                             if (course.name.substring(0, course.name.length() - 1).equals(checkCourse.name)) { //if the name of inclusive class not including "I" == name of found class
                                 for (int ab = 0; ab < checkCourse.seatedPeriods.size(); ab++) { // for each "period" stored in class
                                     for (Integer per : checkCourse.seatedPeriods.get(ab)) // for each period in ArrayList
-                                        counts[per - 1] += Math.round(yes * countEach / course.numSecs); // add number of distributed student to all periods in regular class
+                                        counts[per - 1] += yes * countEach / checkCourse.numSecs; // add number of distributed student to all periods in regular class
                                 }
                                 break;
                             }
@@ -271,7 +271,7 @@ class Master {
 
                 yes = 0;
                 countEach = 0;
-                counts[p] += (int) (count + .5);
+                counts[p] += count; //update to Math.round when finished testing
                 count = 0;
                 if (checkedI)
                     break;
@@ -3386,299 +3386,299 @@ public class Tester {
         UnitedStatesHistory_401030I.add(Stu75, Stu91, Stu120, Stu137, Stu199, Stu227, Stu250, Stu352, Stu409);
         WindEnsemble_631103.add(Stu63, Stu69, Stu85, Stu111, Stu130, Stu177, Stu198, Stu205, Stu215, Stu236, Stu258, Stu285, Stu294, Stu343, Stu350, Stu375, Stu435, Stu462);
 
-        x.add(Chorus_621010, 3, 4);//period 2
-        x.add(CollegeChorus_627010, 3, 4);//period 2
-        x.add(ChorusABDay_621013, 3);//   2A
-        x.add(CollegeWindEnsemble_637010, 13, 14);// Period 7
-        x.add(HonorsWindEnsemble_638100, 13, 14);//Period 7
-        x.add(WindEnsemble_631103, 13);//    Period 7A
-        x.add(ConcertBand_631010, 7, 8);// Period 4
-        x.add(ConcertBand_631013, 8);  //4B
-        x.add(HonorsShapersoftheWorld_108010, 15, 16); //Period 8
-        x.add(MusicProduction_631073, 3);//2A
-        x.add(MusicProduction_631073, 12);//6B
-        x.add(AdvancedArt_611040, 5, 6);// Period 3
-        x.add(PhotographyPortfolio_611100, 5, 6); //Period 3
-        x.add(PhotographyPortfolio_611103, 5);  //3A
-        x.add(PhotographyPortfolio_611103, 6);  //3B
-        x.add(AdvancedPhotoPortfolio_611130, 5, 6);// Period 3
-        x.add(AP2DDesign_619110, 5, 6);// Period 3
-        x.add(PortfolioDevelopment_611050, 5, 6);
-        x.add(PortfolioDevelopment2_611060, 5, 6);
-        x.add(APDrawing_Painting_619060, 5, 6);
-
-        x.add(SUPACollegeItalian_507020, 7, 8);
-        x.add(APItalianLanguage_Culture_509190, 7, 8);
-        x.add(Calculus_201120, 13, 14);
-        x.add(TopicsinAppliedMath_201160, 13, 14);// Period 7
-        x.add(APCalculusBC_209140, 5, 6);// Period 3
-        x.add(APStatistics_209120, 1, 2);// Period 1
-        x.add(ScienceandSociety_301120, 1, 2);//Period 1
-        x.add(APGovt_Politics_409100, 11, 12); //Period 6
-        x.add(HonorsItalian4_508180, 1, 2);// Period 1
-        x.add(Italian4_501180, 11, 12);// Period 6
-        x.add(TopicsinAlgebraII_201110, 7, 8);//Period 4
-        x.add(APComputerScience_729010, 7, 8);
-        x.add(HonorsItalian3_508170, 15, 16);
-        x.add(Italian3_501170, 13, 14);
-        x.add(EarthSciencewlab_PH301150, 1, 2, 4);//Period 1 and 2B
-        x.add(APPhysics1wlab_PH309030, 7, 8, 9);//Period 4 and 5A
-        x.add(APPhysics1wlab_PH309030, 14, 15, 16);//Period 7B and 8
-        x.add(APBiologywlab_PH309020, 3, 5, 6);//Period 2A and 3
-        x.add(APBiologywlab_PH309020, 14, 15, 16);//Period 7B and 8
-        x.add(Physicswlab_PH301090, 1, 2, 4);//Period 1 and 2A now 1 and2B
-        x.add(Physicswlab_PH301090, 3, 5, 6);//Period 2B and 3, now 2A and 3
-        x.add(Physicswlab_PH301090, 10, 11, 12);//Period 5B and 6 trying 5A and 6
-        x.add(ForensicScience_301130i, 9, 10);//Period 5
-        x.add(ForensicScience_301130, 9, 10);//Period 5
-        x.add(ForensicScience_301130, 15, 16);//Period 8
-        x.add(HonorsEngineeringDesign_728020, 11, 12);//Period 6
-        x.add(APSpanishLanguage_Culture_509140, 3, 4);//Period 2
-        x.add(APSpanishLanguage_Culture_509140, 7, 8);//Period 4
-        x.add(APCalculusAB_209130, 1, 2);//Period 1
-        x.add(APCalculusAB_209130, 9, 10);//Period 5
-        x.add(APEnglish12LitandComp_109050, 5, 6);//Period 6//trying out 3
-        x.add(APEnglish12LitandComp_109050, 15, 16);//Period 8
-        x.add(APMacroeconomics_409090, 7, 8);//Period 4
-        x.add(APMacroeconomics_409090, 11, 12);//Period 6
-
-        x.add(HonorsPreCalculus_208110, 9, 10);//Period 5
-        x.add(HonorsPreCalculus_208110, 15, 16);//Period 8
-        x.add(HonorsPreCalculus_208110, 13, 14);//Period 7
-        x.add(HonorsPreCalculus_208110, 5, 6);//Period 3
-        x.add(HonorsComputerScience_728010, 3, 4);//Period 2
-        x.add(HonorsComputerScience_728010, 9, 10);//Moved to period 6, confirm that it should stay
-        x.add(Economics_401053I, 12);
-        x.add(ConstitutionalLaw_401083I, 11);
-        x.add(Economics_401053, 3);
-        x.add(Economics_401053, 12);
-        x.add(Economics_401053, 13);
-        x.add(SUPACollegeSpanish_507010, 5, 6);
-        x.add(SUPACollegeSpanish_507010, 15, 16);
-        x.add(ConstitutionalLaw_401083, 4);
-        x.add(ConstitutionalLaw_401083, 11);
-        x.add(ConstitutionalLaw_401083, 15);
-        x.add(ContemporaryIssues_401093, 14);/*14 16,  789 141516, 78 -- Contemp Issues 14 16 both get hit by APPhysics
-                causing a 3-way conflict AP Comp Sci, AP Physics, Contemp Issues*/
-        x.add(ContemporaryIssues_401093, 16);
-        x.add(ComparativeLiterature_101050I, 9, 10);
-        x.add(ComparativeLiterature2_101050i2, 7, 8);
-        x.add(ComparativeLiterature_101050, 7, 8);
-        x.add(ComparativeLiterature_101050, 9, 10);
-        x.add(ComparativeLiterature_101050, 13, 14);
-        x.add(LatinI_501200, 1, 2);
-        x.add(Spanish4_501100, 1, 2);
-        x.add(Spanish4_501100, 11, 12);
-        x.add(Spanish3_501090, 9, 10);
-
-        x.add(HonorsSpanish4_508110, 1, 2);
-        x.add(HonorsSpanish4_508110, 7, 8);
-        x.add(HonorsSpanish4_508110, 11, 12);
-
-        x.add(AlgebraIITrigonometry_201080, 5, 6);
-        x.add(AlgebraIITrigonometry_201080, 13, 14);
-
-        x.add(APPsychology_309120, 1, 2);
-        x.add(APPsychology_309120, 9, 10);
-        x.add(APPsychology_309120, 11, 12);
-        x.add(APPsychology_409120, 1, 2);
-        x.add(APPsychology_409120, 9, 10);
-        x.add(APPsychology_409120, 11, 12);
-
-        x.add(LearningCenter12_921004, 3, 4);
-        x.add(LearningCenter12_921004, 9, 10);
-        x.add(LearningCenter12_921004, 15, 16);
-
-        x.add(LearningCenter12_921043, 3);
-        x.add(LearningCenter12_921043, 4);
-        x.add(LearningCenter12_921043, 9);
-        x.add(LearningCenter12_921043, 10);
-        x.add(LearningCenter12_921043, 15);
-        x.add(LearningCenter12_921043, 16);
-
-        x.add(PreCalculus_201100, 5, 6);
-        x.add(PreCalculus_201100, 7, 8);
-        x.add(PreCalculus_201100, 13, 14);
-
-        x.add(CollegeMarketing_717030, 1, 2);
-        x.add(CollegeMarketing_717030, 5, 6);
-
-        x.add(APEnglish11LangandComp_109060, 1, 2);
-        x.add(APEnglish11LangandComp_109060, 9, 10);//trying out 5, was 3
-        x.add(APEnglish11LangandComp_109060, 13, 14);
-
-        x.add(English11_101040I, 15, 16);
-        x.add(English11_101040, 3, 4);
-        x.add(English11_101040, 9, 10);
-        x.add(English11_101040, 15, 16);
-
-        x.add(UnitedStatesHistory_401030I, 1, 2);
-        x.add(UnitedStatesHistory_401030, 1, 2);
-        x.add(UnitedStatesHistory_401030, 3, 4);
-        x.add(UnitedStatesHistory_401030, 7, 8);
-
-        x.add(APUSHistory_409040, 5, 6);
-        x.add(APUSHistory_409040, 11, 12);
-        x.add(APUSHistory_409040, 15, 16);
-
-        x.add(LearningCenter11_921003, 3, 4);
-        x.add(LearningCenter11_921003, 5, 6);
-        x.add(LearningCenter11_921003, 13, 14);
-        x.add(LearningCenter11_921033, 3);
-        x.add(LearningCenter11_921033, 4);
-        x.add(LearningCenter11_921033, 5);
-        x.add(LearningCenter11_921033, 6);
-        x.add(LearningCenter11_921033, 13);
-        x.add(LearningCenter11_921033, 14);
-
-        x.add(HonorsChemistrywlab_PH308060, 1, 2, 3);
-        x.add(HonorsChemistrywlab_PH308060, 7, 8, 9);
-
-        x.add(HonorsSpanish3_508160, 11, 12);
-        x.add(HonorsSpanish3_508160, 15, 16);
-
-        x.add(HonorsScienceReseach_308110, 10);
-        x.add(HonorsScienceReseach_308110, 4);
-
-        x.add(AppliedChemistry_301040, 15, 16);
-
-        x.add(Chemistrywlab_PH301050, 4, 5, 6);
-        x.add(Chemistrywlab_PH301050, 7, 9, 10);
-        x.add(Chemistrywlab_PH301050, 15, 16, 1);
-
-        x.add(Health_881063, 2);
-        x.add(Health_881063, 3);
-        x.add(Health_881063, 4);
-        x.add(Health_881063, 8);
-        x.add(Health_881063, 10);
-
-        x.add(StudioinArtII_611033, 4);
-        x.add(StudioinArtII_611033, 13);
-
-        x.add(PhotoII_611083, 3);
-        x.add(PhotoII_611083, 14);
-
-        x.add(DigitalPhotography_611093, 9);
-        x.add(DigitalPhotography_611093, 13);
-
-        x.add(Geometry_201050, 7, 8);
-        x.add(Geometry_201050, 11, 12);
-        x.add(GeometryB_201040, 5, 6);
-
-        x.add(AlgebraIYr2_201210, 1, 2);
-
-        x.add(IntroductionToPsychology_401070, 7, 8);
-
-        x.add(HonorsAlgebraIITrigonometry_208090, 1, 2);
-        x.add(HonorsAlgebraIITrigonometry_208090, 5, 6);
-        x.add(HonorsAlgebraIITrigonometry_208090, 15, 16);
-
-        x.add(English10_101030, 1, 2);
-        x.add(English10_101030, 5, 6);
-        x.add(English10_101030, 7, 8);
-        x.add(English10_101030, 11, 12);
-        x.add(English10_101030, 3, 4);
-        x.add(English10_101030I, 7, 8);
-
-        x.add(LearningCenter10_921002, 9, 10);
-        x.add(LearningCenter10_921002, 15, 16);
-        x.add(LearningCenter10_921023, 9);
-        x.add(LearningCenter10_921023, 10);
-        x.add(LearningCenter10_921023, 15);
-        x.add(LearningCenter10_921023, 16);
-
-        x.add(GlobalHistory_Geography10_401020I, 11, 12);
-
-        x.add(GlobalHistory_Geography10_401020, 5, 6);
-        x.add(GlobalHistory_Geography10_401020, 9, 10);
-        x.add(GlobalHistory_Geography10_401020, 11, 12);
-        x.add(GlobalHistory_Geography10_401020, 13, 14);
-        x.add(GlobalHistory_Geography10_401020, 15, 16);
-
-
-        x.add(TacticalSports_801063, 3);
-        x.add(TacticalSports_801063, 9);
-        x.add(TacticalSports_801063, 14);
-        //
-        x.add(PersonalFitness_881053, 4);
-        x.add(PersonalFitness_881053, 13);
-        x.add(PhysicalEducation10_12_801023, 3);
-        x.add(PhysicalEducation10_12_801023, 4);
-        x.add(PhysicalEducation10_12_801023, 7);
-        x.add(PhysicalEducation10_12_801023, 10);
-        x.add(PhysicalEducation10_12_801023, 13);
-        x.add(PhysicalEducation10_12_801023, 14);
-        x.add(PhysicalEducation10_12_801023, 15);
-        x.add(PhysicalEducation10_12_801023, 16);
-        x.add(English9_101010, 15, 16, 2);
-        x.add(English9_101010, 3, 4, 5);
-        x.add(English9_101010, 3, 4, 6);
-        x.add(English9_101010, 7, 9, 10);
-        x.add(English9_101010, 9, 10, 12);
-        x.add(English9_101010, 13, 14, 16);
-        x.add(English9_101010I, 3, 4, 6);
-        x.add(English9_101010, 13, 14, 16);
-
-        x.add(PhysicalEducation9_801013, 1);
-        x.add(PhysicalEducation9_801013, 5);
-        x.add(PhysicalEducation9_801013, 6);
-        x.add(PhysicalEducation9_801013, 8);
-        x.add(PhysicalEducation9_801013, 11);
-        x.add(PhysicalEducation9_801013, 15);
-
-        x.add(BiologywithLAB_PH301010, 1, 2, 3);//could be 1,2,4, swapping labs with other sect
-        x.add(BiologywithLAB_PH301010, 4, 5, 6);
-        x.add(BiologywithLAB_PH301010, 5, 6, 7);
-        x.add(BiologywithLAB_PH301010, 7, 8, 10);
-        x.add(BiologywithLAB_PH301010, 11, 12, 14);
-        x.add(BiologywithLAB_PH301010, 13, 15, 16);
-        x.add(BiologywithLab_PH30101I, 7, 8, 10);
-        x.add(IntrotoHumanitiesResearch_101033s, 9);
-        x.add(AlgebrawLab_201010I, 9, 11, 12);
-        x.add(AlgebrawLab_201010, 9, 11, 12);
-        x.add(Robotics_721063, 4);
-        x.add(IntrotoScienceResearch_301033, 14);
-        x.add(Italian2_501160, 5, 6);
-        x.add(Italian2_501160, 13, 14);  // moved 8 to 7
-        x.add(HonorsGeometry_208060, 1, 2);
-        x.add(HonorsGeometry_208060, 11, 12);
-        x.add(Photography_611070, 1, 2);
-        x.add(Photography_611070, 7, 8);
-        x.add(AlgebraI_201020, 3, 4);  //moved 1 to 2
-        x.add(AlgebraI_201020, 15, 16); //moved 7 to 8
-        x.add(AlgebraIYr1_201021, 11, 12);
-        x.add(GlobalHistory_Geography9_401010I, 1, 2);
-        x.add(LearningCenter9_921013);
-        x.add(LearningCenter9_921001, 1, 2);
-        x.add(LearningCenter9_921001, 15, 16);
-        x.add(LearningCenter9_921013, 1);
-        x.add(LearningCenter9_921013, 2);
-        x.add(LearningCenter9_921013, 15);
-        x.add(LearningCenter9_921013, 16);
-        x.add(English9_101010S, 13, 14);
-        x.add(English10_101030S, 13, 14);
-
-        x.add(Accounting_711010, 7, 8);
-        x.add(Accounting_711010, 13, 14);
-        x.add(CollegeAccounting_717020, 9, 10);
-        x.add(CollegeAccounting_717020, 15, 16);
-        x.add(TheaterArtsIIPerformanceWorkshop_620203, 14);
-
-        x.add(StudioinArt_611010, 1, 2);
-        x.add(StudioinArt_611010, 9, 10);
-        x.add(StudioinArt_611010, 11, 12);
-        x.add(StudioinArt_611010, 15, 16);
-
-        x.add(Spanish2_501080, 5, 6);
-        x.add(Spanish2_501080, 13, 14);
-        x.add(Spanish2_501080, 11, 12);//was 6th, trying 8th
-
-        x.add(GlobalHistory_Geography9_401010, 1, 2);
-        x.add(GlobalHistory_Geography9_401010, 3, 4);
-        x.add(GlobalHistory_Geography9_401010, 7, 8);
-        x.add(GlobalHistory_Geography9_401010, 9, 10);
-        x.add(GlobalHistory_Geography9_401010, 15, 16);
-        x.add(Spanish1_501070, 13, 14);
+//       x.add(Chorus_621010, 3, 4);//period 2
+//       x.add(CollegeChorus_627010, 3, 4);//period 2
+//       x.add(ChorusABDay_621013, 3);//   2A
+//       x.add(CollegeWindEnsemble_637010, 13, 14);// Period 7
+//       x.add(HonorsWindEnsemble_638100, 13, 14);//Period 7
+//       x.add(WindEnsemble_631103, 13);//    Period 7A
+//       x.add(ConcertBand_631010, 7, 8);// Period 4
+//       x.add(ConcertBand_631013, 8);  //4B
+//       x.add(HonorsShapersoftheWorld_108010, 15, 16); //Period 8
+//       x.add(MusicProduction_631073, 3);//2A
+//       x.add(MusicProduction_631073, 12);//6B
+//       x.add(AdvancedArt_611040, 5, 6);// Period 3
+//       x.add(PhotographyPortfolio_611100, 5, 6); //Period 3
+//       x.add(PhotographyPortfolio_611103, 5);  //3A
+//       x.add(PhotographyPortfolio_611103, 6);  //3B
+//       x.add(AdvancedPhotoPortfolio_611130, 5, 6);// Period 3
+//       x.add(AP2DDesign_619110, 5, 6);// Period 3
+//       x.add(PortfolioDevelopment_611050, 5, 6);
+//       x.add(PortfolioDevelopment2_611060, 5, 6);
+//       x.add(APDrawing_Painting_619060, 5, 6);
+//
+//       x.add(SUPACollegeItalian_507020, 7, 8);
+//       x.add(APItalianLanguage_Culture_509190, 7, 8);
+//       x.add(Calculus_201120, 13, 14);
+//       x.add(TopicsinAppliedMath_201160, 13, 14);// Period 7
+//       x.add(APCalculusBC_209140, 5, 6);// Period 3
+//       x.add(APStatistics_209120, 1, 2);// Period 1
+//       x.add(ScienceandSociety_301120, 1, 2);//Period 1
+//       x.add(APGovt_Politics_409100, 11, 12); //Period 6
+//       x.add(HonorsItalian4_508180, 1, 2);// Period 1
+//       x.add(Italian4_501180, 11, 12);// Period 6
+//       x.add(TopicsinAlgebraII_201110, 7, 8);//Period 4
+//       x.add(APComputerScience_729010, 7, 8);
+//       x.add(HonorsItalian3_508170, 15, 16);
+//       x.add(Italian3_501170, 13, 14);
+//       x.add(EarthSciencewlab_PH301150, 1, 2, 4);//Period 1 and 2B
+//       x.add(APPhysics1wlab_PH309030, 7, 8, 9);//Period 4 and 5A
+//       x.add(APPhysics1wlab_PH309030, 14, 15, 16);//Period 7B and 8
+//       x.add(APBiologywlab_PH309020, 3, 5, 6);//Period 2A and 3
+//       x.add(APBiologywlab_PH309020, 14, 15, 16);//Period 7B and 8
+//       x.add(Physicswlab_PH301090, 1, 2, 4);//Period 1 and 2A now 1 and2B
+//       x.add(Physicswlab_PH301090, 3, 5, 6);//Period 2B and 3, now 2A and 3
+//       x.add(Physicswlab_PH301090, 10, 11, 12);//Period 5B and 6 trying 5A and 6
+//       x.add(ForensicScience_301130i, 9, 10);//Period 5
+//       x.add(ForensicScience_301130, 9, 10);//Period 5
+//       x.add(ForensicScience_301130, 15, 16);//Period 8
+//       x.add(HonorsEngineeringDesign_728020, 11, 12);//Period 6
+//       x.add(APSpanishLanguage_Culture_509140, 3, 4);//Period 2
+//       x.add(APSpanishLanguage_Culture_509140, 7, 8);//Period 4
+//       x.add(APCalculusAB_209130, 1, 2);//Period 1
+//       x.add(APCalculusAB_209130, 9, 10);//Period 5
+//       x.add(APEnglish12LitandComp_109050, 5, 6);//Period 6//trying out 3
+//       x.add(APEnglish12LitandComp_109050, 15, 16);//Period 8
+//       x.add(APMacroeconomics_409090, 7, 8);//Period 4
+//       x.add(APMacroeconomics_409090, 11, 12);//Period 6
+//
+//       x.add(HonorsPreCalculus_208110, 9, 10);//Period 5
+//       x.add(HonorsPreCalculus_208110, 15, 16);//Period 8
+//       x.add(HonorsPreCalculus_208110, 13, 14);//Period 7
+//       x.add(HonorsPreCalculus_208110, 5, 6);//Period 3
+//       x.add(HonorsComputerScience_728010, 3, 4);//Period 2
+//       x.add(HonorsComputerScience_728010, 9, 10);//Moved to period 6, confirm that it should stay
+//       x.add(Economics_401053I, 12);
+//       x.add(ConstitutionalLaw_401083I, 11);
+//       x.add(Economics_401053, 3);
+//       x.add(Economics_401053, 12);
+//       x.add(Economics_401053, 13);
+//       x.add(SUPACollegeSpanish_507010, 5, 6);
+//       x.add(SUPACollegeSpanish_507010, 15, 16);
+//       x.add(ConstitutionalLaw_401083, 4);
+//       x.add(ConstitutionalLaw_401083, 11);
+//       x.add(ConstitutionalLaw_401083, 15);
+//       x.add(ContemporaryIssues_401093, 14);/*14 16,  789 141516, 78 -- Contemp Issues 14 16 both get hit by APPhysics
+//               causing a 3-way conflict AP Comp Sci, AP Physics, Contemp Issues*/
+//       x.add(ContemporaryIssues_401093, 16);
+//       x.add(ComparativeLiterature_101050I, 9, 10);
+//       x.add(ComparativeLiterature2_101050i2, 7, 8);
+//       x.add(ComparativeLiterature_101050, 7, 8);
+//       x.add(ComparativeLiterature_101050, 9, 10);
+//       x.add(ComparativeLiterature_101050, 13, 14);
+//       x.add(LatinI_501200, 1, 2);
+//       x.add(Spanish4_501100, 1, 2);
+//       x.add(Spanish4_501100, 11, 12);
+//       x.add(Spanish3_501090, 9, 10);
+//
+//       x.add(HonorsSpanish4_508110, 1, 2);
+//       x.add(HonorsSpanish4_508110, 7, 8);
+//       x.add(HonorsSpanish4_508110, 11, 12);
+//
+//       x.add(AlgebraIITrigonometry_201080, 5, 6);
+//       x.add(AlgebraIITrigonometry_201080, 13, 14);
+//
+//       x.add(APPsychology_309120, 1, 2);
+//       x.add(APPsychology_309120, 9, 10);
+//       x.add(APPsychology_309120, 11, 12);
+//       x.add(APPsychology_409120, 1, 2);
+//       x.add(APPsychology_409120, 9, 10);
+//       x.add(APPsychology_409120, 11, 12);
+//
+//       x.add(LearningCenter12_921004, 3, 4);
+//       x.add(LearningCenter12_921004, 9, 10);
+//       x.add(LearningCenter12_921004, 15, 16);
+//
+//       x.add(LearningCenter12_921043, 3);
+//       x.add(LearningCenter12_921043, 4);
+//       x.add(LearningCenter12_921043, 9);
+//       x.add(LearningCenter12_921043, 10);
+//       x.add(LearningCenter12_921043, 15);
+//       x.add(LearningCenter12_921043, 16);
+//
+//       x.add(PreCalculus_201100, 5, 6);
+//       x.add(PreCalculus_201100, 7, 8);
+//       x.add(PreCalculus_201100, 13, 14);
+//
+//       x.add(CollegeMarketing_717030, 1, 2);
+//       x.add(CollegeMarketing_717030, 5, 6);
+//
+//       x.add(APEnglish11LangandComp_109060, 1, 2);
+//       x.add(APEnglish11LangandComp_109060, 9, 10);//trying out 5, was 3
+//       x.add(APEnglish11LangandComp_109060, 13, 14);
+//
+//       x.add(English11_101040I, 15, 16);
+//       x.add(English11_101040, 3, 4);
+//       x.add(English11_101040, 9, 10);
+//       x.add(English11_101040, 15, 16);
+//
+//       x.add(UnitedStatesHistory_401030I, 1, 2);
+//       x.add(UnitedStatesHistory_401030, 1, 2);
+//       x.add(UnitedStatesHistory_401030, 3, 4);
+//       x.add(UnitedStatesHistory_401030, 7, 8);
+//
+//       x.add(APUSHistory_409040, 5, 6);
+//       x.add(APUSHistory_409040, 11, 12);
+//       x.add(APUSHistory_409040, 15, 16);
+//
+//       x.add(LearningCenter11_921003, 3, 4);
+//       x.add(LearningCenter11_921003, 5, 6);
+//       x.add(LearningCenter11_921003, 13, 14);
+//       x.add(LearningCenter11_921033, 3);
+//       x.add(LearningCenter11_921033, 4);
+//       x.add(LearningCenter11_921033, 5);
+//       x.add(LearningCenter11_921033, 6);
+//       x.add(LearningCenter11_921033, 13);
+//       x.add(LearningCenter11_921033, 14);
+//
+//       x.add(HonorsChemistrywlab_PH308060, 1, 2, 3);
+//       x.add(HonorsChemistrywlab_PH308060, 7, 8, 9);
+//
+//       x.add(HonorsSpanish3_508160, 11, 12);
+//       x.add(HonorsSpanish3_508160, 15, 16);
+//
+//       x.add(HonorsScienceReseach_308110, 10);
+//       x.add(HonorsScienceReseach_308110, 4);
+//
+//       x.add(AppliedChemistry_301040, 15, 16);
+//
+//       x.add(Chemistrywlab_PH301050, 4, 5, 6);
+//       x.add(Chemistrywlab_PH301050, 7, 9, 10);
+//       x.add(Chemistrywlab_PH301050, 15, 16, 1);
+//
+//       x.add(Health_881063, 2);
+//       x.add(Health_881063, 3);
+//       x.add(Health_881063, 4);
+//       x.add(Health_881063, 8);
+//       x.add(Health_881063, 10);
+//
+//       x.add(StudioinArtII_611033, 4);
+//       x.add(StudioinArtII_611033, 13);
+//
+//       x.add(PhotoII_611083, 3);
+//       x.add(PhotoII_611083, 14);
+//
+//       x.add(DigitalPhotography_611093, 9);
+//       x.add(DigitalPhotography_611093, 13);
+//
+//       x.add(Geometry_201050, 7, 8);
+//       x.add(Geometry_201050, 11, 12);
+//       x.add(GeometryB_201040, 5, 6);
+//
+//       x.add(AlgebraIYr2_201210, 1, 2);
+//
+//       x.add(IntroductionToPsychology_401070, 7, 8);
+//
+//       x.add(HonorsAlgebraIITrigonometry_208090, 1, 2);
+//       x.add(HonorsAlgebraIITrigonometry_208090, 5, 6);
+//       x.add(HonorsAlgebraIITrigonometry_208090, 15, 16);
+//
+//       x.add(English10_101030, 1, 2);
+//       x.add(English10_101030, 5, 6);
+//       x.add(English10_101030, 7, 8);
+//       x.add(English10_101030, 11, 12);
+//       x.add(English10_101030, 3, 4);
+//       x.add(English10_101030I, 7, 8);
+//
+//       x.add(LearningCenter10_921002, 9, 10);
+//       x.add(LearningCenter10_921002, 15, 16);
+//       x.add(LearningCenter10_921023, 9);
+//       x.add(LearningCenter10_921023, 10);
+//       x.add(LearningCenter10_921023, 15);
+//       x.add(LearningCenter10_921023, 16);
+//
+//       x.add(GlobalHistory_Geography10_401020I, 11, 12);
+//
+//       x.add(GlobalHistory_Geography10_401020, 5, 6);
+//       x.add(GlobalHistory_Geography10_401020, 9, 10);
+//       x.add(GlobalHistory_Geography10_401020, 11, 12);
+//       x.add(GlobalHistory_Geography10_401020, 13, 14);
+//       x.add(GlobalHistory_Geography10_401020, 15, 16);
+//
+//
+//       x.add(TacticalSports_801063, 3);
+//       x.add(TacticalSports_801063, 9);
+//       x.add(TacticalSports_801063, 14);
+//       //
+//       x.add(PersonalFitness_881053, 4);
+//       x.add(PersonalFitness_881053, 13);
+//       x.add(PhysicalEducation10_12_801023, 3);
+//       x.add(PhysicalEducation10_12_801023, 4);
+//       x.add(PhysicalEducation10_12_801023, 7);
+//       x.add(PhysicalEducation10_12_801023, 10);
+//       x.add(PhysicalEducation10_12_801023, 13);
+//       x.add(PhysicalEducation10_12_801023, 14);
+//       x.add(PhysicalEducation10_12_801023, 15);
+//       x.add(PhysicalEducation10_12_801023, 16);
+//       x.add(English9_101010, 15, 16, 2);
+//       x.add(English9_101010, 3, 4, 5);
+//       x.add(English9_101010, 3, 4, 6);
+//       x.add(English9_101010, 7, 9, 10);
+//       x.add(English9_101010, 9, 10, 12);
+//       x.add(English9_101010, 13, 14, 16);
+//       x.add(English9_101010I, 3, 4, 6);
+//       x.add(English9_101010, 13, 14, 16);
+//
+//       x.add(PhysicalEducation9_801013, 1);
+//       x.add(PhysicalEducation9_801013, 5);
+//       x.add(PhysicalEducation9_801013, 6);
+//       x.add(PhysicalEducation9_801013, 8);
+//       x.add(PhysicalEducation9_801013, 11);
+//       x.add(PhysicalEducation9_801013, 15);
+//
+//       x.add(BiologywithLAB_PH301010, 1, 2, 3);//could be 1,2,4, swapping labs with other sect
+//       x.add(BiologywithLAB_PH301010, 4, 5, 6);
+//       x.add(BiologywithLAB_PH301010, 5, 6, 7);
+//       x.add(BiologywithLAB_PH301010, 7, 8, 10);
+//       x.add(BiologywithLAB_PH301010, 11, 12, 14);
+//       x.add(BiologywithLAB_PH301010, 13, 15, 16);
+//       x.add(BiologywithLab_PH30101I, 7, 8, 10);
+//       x.add(IntrotoHumanitiesResearch_101033s, 9);
+//       x.add(AlgebrawLab_201010I, 9, 11, 12);
+//       x.add(AlgebrawLab_201010, 9, 11, 12);
+//       x.add(Robotics_721063, 4);
+//       x.add(IntrotoScienceResearch_301033, 14);
+//       x.add(Italian2_501160, 5, 6);
+//       x.add(Italian2_501160, 13, 14);  // moved 8 to 7
+//       x.add(HonorsGeometry_208060, 1, 2);
+//       x.add(HonorsGeometry_208060, 11, 12);
+//       x.add(Photography_611070, 1, 2);
+//       x.add(Photography_611070, 7, 8);
+//       x.add(AlgebraI_201020, 3, 4);  //moved 1 to 2
+//       x.add(AlgebraI_201020, 15, 16); //moved 7 to 8
+//       x.add(AlgebraIYr1_201021, 11, 12);
+//       x.add(GlobalHistory_Geography9_401010I, 1, 2);
+//       x.add(LearningCenter9_921013);
+//       x.add(LearningCenter9_921001, 1, 2);
+//       x.add(LearningCenter9_921001, 15, 16);
+//       x.add(LearningCenter9_921013, 1);
+//       x.add(LearningCenter9_921013, 2);
+//       x.add(LearningCenter9_921013, 15);
+//       x.add(LearningCenter9_921013, 16);
+//       x.add(English9_101010S, 13, 14);
+//       x.add(English10_101030S, 13, 14);
+//
+//       x.add(Accounting_711010, 7, 8);
+//       x.add(Accounting_711010, 13, 14);
+//       x.add(CollegeAccounting_717020, 9, 10);
+//       x.add(CollegeAccounting_717020, 15, 16);
+//       x.add(TheaterArtsIIPerformanceWorkshop_620203, 14);
+//
+//       x.add(StudioinArt_611010, 1, 2);
+//       x.add(StudioinArt_611010, 9, 10);
+//       x.add(StudioinArt_611010, 11, 12);
+//       x.add(StudioinArt_611010, 15, 16);
+//
+//       x.add(Spanish2_501080, 5, 6);
+//       x.add(Spanish2_501080, 13, 14);
+//       x.add(Spanish2_501080, 11, 12);//was 6th, trying 8th
+//
+//       x.add(GlobalHistory_Geography9_401010, 1, 2);
+//       x.add(GlobalHistory_Geography9_401010, 3, 4);
+//       x.add(GlobalHistory_Geography9_401010, 7, 8);
+//       x.add(GlobalHistory_Geography9_401010, 9, 10);
+//       x.add(GlobalHistory_Geography9_401010, 15, 16);
+//       x.add(Spanish1_501070, 13, 14);
 
         //Accounting_711010
         //AdvancedArt_611040
@@ -3810,28 +3810,32 @@ public class Tester {
 
         //System.out.println(PersonalFitness_881053.roster.size());
 
-//        Course A = new Course("A", "1", 2, 0.5);//2 sections
-//        Course B = new Course("B", "1", 2);//2 sections
-//        Course C = new Course("C", "1", 2);//2 sections
-//
-//        Student s1 = new Student("s1", 9);
-//        Student s2 = new Student("s2", 9);
-//        Student s3 = new Student("s3", 9);
-//        Student s4 = new Student("s4", 9);
-//        Student s5 = new Student("s5", 9);
-//
-//        A.add(s1, s2, s3);//                A: (3), (5), (11)
-//        B.add(s3, s4, s5);//                B: (3,4), (7,8)
-//        C.add(s1, s3, s5);//                C:(11,12), (15,16)
-//
-//        x.add(A, 3);
-//        x.add(A, 5);
-//        x.add(B, 3, 4);
-//        x.add(B, 7, 8);
-//        x.add(C, 11, 12);
-//        x.add(C, 15, 16);
-//
-//
+        Course A = new Course("A", "1", 2, 0.5);//2 sections
+        Course B = new Course("B", "1", 2);//2 sections
+        Course C = new Course("C", "1", 2);//2 sections
+        Course CI = new Course("CI", "1234I", 1);
+        Student s1 = new Student("s1", 9);
+        Student s2 = new Student("s2", 9);
+        Student s3 = new Student("s3", 9);
+        Student s4 = new Student("s4", 9);
+        Student s5 = new Student("s5", 9);
+        Student s6 = new Student("s6", 9);
+        Student s7 = new Student("s7", 9);
+        A.add(s1, s2, s3);//                A: (3) 1.5, (5) 1.5
+        B.add(s3, s4, s5, s6);//            B: (3,4) 2.0 (7,8) 2.0
+        C.add(s1, s3, s5);//                C:(11,12),2.5 (15,16) 2.5
+        CI.add(s6, s7);//                    CI: (11,12)
+
+
+        x.add(A, 3);
+        x.add(A, 5);
+        x.add(B, 3, 4);
+        x.add(B, 7, 8);
+        x.add(C, 11, 12);
+        x.add(C, 15, 16);
+        x.add(CI, 11, 12);
+
+
 //        x.check(A, 3);
 
         x.seatCount(9);
@@ -3843,3 +3847,6 @@ public class Tester {
 
     }
 }
+
+
+
