@@ -29,17 +29,29 @@ public class test1 {
             choice = input.nextInt();
             if (choice == 1) {
 
+<<<<<<< HEAD
                 // missing code
+=======
+                accts[which].deposit(input.nextInt());
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
 
             }
             if (choice == 2) {
 
+<<<<<<< HEAD
                 // missing code
+=======
+                accts[which].withdraw(input.nextInt());
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
 
             }
             if (choice == 3) {
 
+<<<<<<< HEAD
                 // missing code
+=======
+                accts[which].changePin(input.nextInt());
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
 
             }
 
@@ -96,7 +108,11 @@ class Acct {
          * been chosen already.
          */
 
+<<<<<<< HEAD
         int num = (int) ((Math.random() * 900) + 100);
+=======
+        int num = (int) ((Math.random() * 900)) + 100;
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
         int i = 0;
         while (acctNums[i] == num) {
             num = (int) ((Math.random() * 900) + 100);
@@ -107,9 +123,16 @@ class Acct {
         for (int j = 0; i < acctNums.length; j++){
             if(acctNums[j]==0)
                 acctNums[j] = num;
+<<<<<<< HEAD
                 break;
 
         }
+=======
+            break;
+
+        }
+        acctNum = num;
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
 
     }
 
@@ -120,7 +143,18 @@ class Acct {
          * criteria, the user should be prompted to try again. we can assume the user
          * enters a positive integer.
          */
+<<<<<<< HEAD
         
+=======
+        System.out.println("Enter a pin");
+        int p = input.nextInt();
+        String q = Integer.toString(p);
+        while(p>10000000 || p< 1000 || q.contains("0")){
+            System.out.println("Invalid pin, enter a pin");
+            p = input.nextInt(); q = Integer.toString(p);
+        }
+        pin = p;
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
     }
 
     public void changePin() {
@@ -131,7 +165,17 @@ class Acct {
          * two Strings are equal, we should use String1.equals(String2), rather than
          * String1==String2
          */
+<<<<<<< HEAD
 
+=======
+        System.out.println("Enter answer to " + secretQuestion);
+        if (input.nextLine().equals(secretAnswer)){
+            setPin();
+        }
+        else{
+            System.out.println("Incorrect answer");
+        }
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
     }
 
     public void withdraw(int x) {
@@ -142,6 +186,17 @@ class Acct {
          * account. If the pin is entered incorrectly, the amount of the withdrawal
          * should be 0.
          */
+<<<<<<< HEAD
+=======
+        System.out.println("Enter pin");
+        if(input.nextInt()==pin){
+            bal-=x;
+            if(bal<0) {
+                System.out.println("Cant take more out than what you got");
+                bal += x;
+            }
+        }
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
     }
 
     public String toString() {

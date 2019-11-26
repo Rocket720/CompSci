@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 package frusty;
 
+=======
+>>>>>>> 7b09dd28838274dc344e3e7f807cc9ab0b9fb4e6
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,11 +17,11 @@ import java.util.Collections;
 //how does it handle if we double up a section - should we add it twice, think about seat counts
 //inputting false on the check method means that the lab doesn't have to be adjacent to the class
 /* use x.check() for total conflicts
- * x.sched(Student x) gives the student schedule, along with any conflict groups.
- *
- *
- * Results for 2019-2020 after Scheduling Committee:
- * Total Students: 471
+* x.sched(Student x) gives the student schedule, along with any conflict groups.
+*
+*
+* Results for 2019-2020 after Scheduling Committee:
+* Total Students: 471
 Number of students fully scheduled:386
 Number of students Down 1 Course:83
 Number of students Down 2 Courses:2
