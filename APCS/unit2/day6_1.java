@@ -1,4 +1,4 @@
-import java.util.Scanner;
+/*import java.util.Scanner;
 public class day6_1{
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
@@ -58,15 +58,15 @@ class Kid{
         String s = "";
         s+= name + ", a " + age + " year old ";
         if(female)
-            s+="female"
+            s+="female";
         else
-            s+="male"
-        s+= " who plays: "
+            s+="male";
+        s+= " who plays: ";
         for (Sport a : Sports) {
-            s+= a.name + ", "
+            s+= a.name + ", ";
         }
         s.substring(0,s.length-3);      
-        return(s)       
+        return(s)  ;     
    	}
 }
  
@@ -84,3 +84,4 @@ class Sport
         team = t;
     }
 }
+*/
