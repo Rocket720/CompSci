@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "CompSci_9b547c47"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test1",
+            "request": "launch",
+            "mainClass": "test1",
+            "projectName": "CompSci_9b547c47"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - day2",
             "request": "launch",
             "mainClass": "day2",
