@@ -18,7 +18,7 @@ public class day2_words extends Application {
         Scene s = new Scene(pane, 800, 800);
 
         int radius = 100, index = 0;
-        String phrase = "this program fucking sucks  ";
+        String phrase = "this program is bad";
 
         double iterator = (360.0 / phrase.length());
         iterator = ((int) (iterator) + 1);

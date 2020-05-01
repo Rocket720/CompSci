@@ -20,7 +20,7 @@ public class day3_clock extends Application {
         Pane pane = new Pane();
 
         //Set Time
-        double s = 0, m = 20 + s / 60, h = 4 + m / 60;
+        double s = 59, m = 55 + s / 60, h = 11 + m / 60;
 
         //Clock Face
         Circle clock = new Circle(400, 400, 350);

@@ -1,5 +1,5 @@
-public class day3{
-    public static void main(String[] args){
-        Triangle t = new Triangle();   
-    }
-}
+//public class day3{
+//    public static void main(String[] args){
+//        Triangle t = new Triangle();
+//    }
+//}
